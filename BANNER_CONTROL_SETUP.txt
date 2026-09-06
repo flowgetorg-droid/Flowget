@@ -1,0 +1,16 @@
+SparkCart Mall — Homepage Banner Control
+
+This version adds admin-controlled homepage banners/sliders.
+
+One-time Supabase step:
+1. Open Supabase SQL Editor.
+2. Run HOMEPAGE_BANNERS_MIGRATION.sql once.
+3. Do not run supabase.sql again.
+
+After that:
+- Admin Panel → Marketing → Homepage Banner / Slider Control
+- Add/Edit/Hide/Show/Delete banners.
+- Set badge, title, subtitle, button text/link, image URL and order.
+- Customer homepage changes slides every 7 seconds.
+
+No existing product/order rows are deleted by this migration.

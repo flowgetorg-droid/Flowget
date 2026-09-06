@@ -1,0 +1,4 @@
+Do not run supabase.sql for the feature upgrade.
+It contains the product seed/catalog and may update product prices/details.
+For the current feature upgrade, run only:
+SPARKCART_FEATURES_MIGRATION.sql

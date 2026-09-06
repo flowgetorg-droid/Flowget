@@ -1,0 +1,7 @@
+SparkCart Mall - Step 4 Final Package + Lucky Spin Control
+
+IMPORTANT: Run the updated supabase.sql in Supabase SQL Editor before testing Lucky Spin settings.
+Admin > Marketing > Lucky Spin Control lets you set ON/OFF, spins per customer, minimum order,
+reward amounts, and maximum discount.
+Customer spin usage is tracked per browser using localStorage.
+Deploy the package contents to the Cloudflare Pages-connected repository; do not upload the ZIP itself to GitHub.

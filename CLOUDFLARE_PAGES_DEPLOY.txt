@@ -1,0 +1,19 @@
+SPARKCART MALL — CLOUDFLARE PAGES READY
+
+Deploy this folder/repository as a static Cloudflare Pages site.
+
+Settings:
+- Framework preset: None
+- Build command: leave empty
+- Build output directory: / (repository root)
+- Production branch: main
+- Expected URL: https://sparkcart-mall.pages.dev
+
+Payment changes:
+- Cash on Delivery: online payment fields stay hidden.
+- bKash/Nagad: payment fields appear.
+- bKash/Nagad receiving personal number: 01822024071
+- Customer payment number means the customer's own number used to send the money.
+- Rocket has been removed from the customer payment selector.
+
+Do not run Supabase seed SQL unless specifically required. Existing Supabase integration remains unchanged.

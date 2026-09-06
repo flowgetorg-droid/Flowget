@@ -1,0 +1,1375 @@
+[
+  {
+    "name": "Smartwatch S9 AMOLED",
+    "category": "Smart Accessories",
+    "price": 2490,
+    "old_price": 3490,
+    "discount": 29,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GAD-001.svg",
+    "stock": 20,
+    "badge": "হট",
+    "featured": true,
+    "active": true,
+    "details": "কল, নোটিফিকেশন, স্টেপ কাউন্ট ও দৈনন্দিন ফিটনেস ট্র্যাকিংয়ের জন্য স্টাইলিশ স্মার্টওয়াচ। তরুণদের জন্য সহজ গিফট আইডিয়া।",
+    "specifications": "Bluetooth • AMOLED-style display • Activity tracking • Magnetic charging",
+    "sku": "SC-GAD-001",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GAD-001.svg"
+    ],
+    "colors": [
+      "Black",
+      "Silver"
+    ],
+    "sizes": [],
+    "seo_title": "Smartwatch S9 AMOLED | SparkCart Mall Bangladesh",
+    "meta_description": "কল, নোটিফিকেশন, স্টেপ কাউন্ট ও দৈনন্দিন ফিটনেস ট্র্যাকিংয়ের জন্য স্টাইলিশ স্মার্টওয়াচ। তরুণদের জন্য সহজ গিফট আইডিয়া।"
+  },
+  {
+    "name": "TWS Earbuds Pro X1",
+    "category": "Smart Accessories",
+    "price": 1390,
+    "old_price": 1990,
+    "discount": 30,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GAD-002.svg",
+    "stock": 20,
+    "badge": "সেরা বিক্রি",
+    "featured": true,
+    "active": true,
+    "details": "কমপ্যাক্ট TWS ইয়ারবাড—মিউজিক, কল ও দৈনন্দিন ব্যবহারের জন্য উপযোগী।",
+    "specifications": "Bluetooth • Touch control • Charging case • Stereo sound",
+    "sku": "SC-GAD-002",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GAD-002.svg"
+    ],
+    "colors": [
+      "Black",
+      "White"
+    ],
+    "sizes": [],
+    "seo_title": "TWS Earbuds Pro X1 | SparkCart Mall Bangladesh",
+    "meta_description": "কমপ্যাক্ট TWS ইয়ারবাড—মিউজিক, কল ও দৈনন্দিন ব্যবহারের জন্য উপযোগী।"
+  },
+  {
+    "name": "FRB N-27 Smart Neckband",
+    "category": "Smart Accessories",
+    "price": 890,
+    "old_price": 1190,
+    "discount": 25,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GAD-003.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": true,
+    "active": true,
+    "details": "মিউজিক, কলিং ও ট্রাভেলের জন্য আরামদায়ক স্মার্ট নেকব্যান্ড।",
+    "specifications": "Bluetooth 5.4 • Neckband design • Voice support • Rechargeable",
+    "sku": "SC-GAD-003",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GAD-003.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "FRB N-27 Smart Neckband | SparkCart Mall Bangladesh",
+    "meta_description": "মিউজিক, কলিং ও ট্রাভেলের জন্য আরামদায়ক স্মার্ট নেকব্যান্ড।"
+  },
+  {
+    "name": "Mini Bluetooth Speaker",
+    "category": "Smart Accessories",
+    "price": 1690,
+    "old_price": 2290,
+    "discount": 26,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GAD-004.svg",
+    "stock": 20,
+    "badge": "হট",
+    "featured": false,
+    "active": true,
+    "details": "ছোট সাইজের পোর্টেবল ব্লুটুথ স্পিকার—রুম, ভ্রমণ ও ছোট গ্যাদারিংয়ের জন্য।",
+    "specifications": "Bluetooth • Portable • Rechargeable battery • Compact body",
+    "sku": "SC-GAD-004",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GAD-004.svg"
+    ],
+    "colors": [
+      "Black",
+      "Blue"
+    ],
+    "sizes": [],
+    "seo_title": "Mini Bluetooth Speaker | SparkCart Mall Bangladesh",
+    "meta_description": "ছোট সাইজের পোর্টেবল ব্লুটুথ স্পিকার—রুম, ভ্রমণ ও ছোট গ্যাদারিংয়ের জন্য।"
+  },
+  {
+    "name": "Power Bank 10000mAh",
+    "category": "Smart Accessories",
+    "price": 1590,
+    "old_price": 1990,
+    "discount": 20,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GAD-005.svg",
+    "stock": 20,
+    "badge": "অফার",
+    "featured": true,
+    "active": true,
+    "details": "দৈনন্দিন মোবাইল ব্যাকআপের জন্য কমপ্যাক্ট 10000mAh পাওয়ার ব্যাংক।",
+    "specifications": "10000mAh • USB output • LED indicator • Portable",
+    "sku": "SC-GAD-005",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GAD-005.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Power Bank 10000mAh | SparkCart Mall Bangladesh",
+    "meta_description": "দৈনন্দিন মোবাইল ব্যাকআপের জন্য কমপ্যাক্ট 10000mAh পাওয়ার ব্যাংক।"
+  },
+  {
+    "name": "Fast Charger 20W Type-C",
+    "category": "Mobile Accessories",
+    "price": 1150,
+    "old_price": 1490,
+    "discount": 23,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-MOB-001.svg",
+    "stock": 20,
+    "badge": "হট",
+    "featured": true,
+    "active": true,
+    "details": "Type-C ডিভাইসের জন্য কমপ্যাক্ট ফাস্ট চার্জার। বাসা, অফিস ও ট্রাভেলে ব্যবহারযোগ্য।",
+    "specifications": "20W class • USB-C • Compact adapter • Cable compatible",
+    "sku": "SC-MOB-001",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-MOB-001.svg"
+    ],
+    "colors": [
+      "White"
+    ],
+    "sizes": [],
+    "seo_title": "Fast Charger 20W Type-C | SparkCart Mall Bangladesh",
+    "meta_description": "Type-C ডিভাইসের জন্য কমপ্যাক্ট ফাস্ট চার্জার। বাসা, অফিস ও ট্রাভেলে ব্যবহারযোগ্য।"
+  },
+  {
+    "name": "Type-C Fast Charging Cable 1m",
+    "category": "Mobile Accessories",
+    "price": 250,
+    "old_price": 450,
+    "discount": 44,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-MOB-002.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": false,
+    "active": true,
+    "details": "চার্জিং ও ডেটা ট্রান্সফারের জন্য দৈনন্দিন Type-C কেবল।",
+    "specifications": "USB-A to USB-C • 1m • Flexible cable",
+    "sku": "SC-MOB-002",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-MOB-002.svg"
+    ],
+    "colors": [
+      "White",
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Type-C Fast Charging Cable 1m | SparkCart Mall Bangladesh",
+    "meta_description": "চার্জিং ও ডেটা ট্রান্সফারের জন্য দৈনন্দিন Type-C কেবল।"
+  },
+  {
+    "name": "Adjustable Mobile Holder",
+    "category": "Mobile Accessories",
+    "price": 350,
+    "old_price": 650,
+    "discount": 46,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-MOB-003.svg",
+    "stock": 20,
+    "badge": "অফার",
+    "featured": true,
+    "active": true,
+    "details": "ভিডিও দেখা, অনলাইন ক্লাস ও ডেস্ক ব্যবহারের জন্য অ্যাডজাস্টেবল মোবাইল স্ট্যান্ড।",
+    "specifications": "Adjustable angle • Foldable • Desk use",
+    "sku": "SC-MOB-003",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-MOB-003.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Adjustable Mobile Holder | SparkCart Mall Bangladesh",
+    "meta_description": "ভিডিও দেখা, অনলাইন ক্লাস ও ডেস্ক ব্যবহারের জন্য অ্যাডজাস্টেবল মোবাইল স্ট্যান্ড।"
+  },
+  {
+    "name": "RGB Gaming Finger Sleeves",
+    "category": "Mobile Accessories",
+    "price": 450,
+    "old_price": 750,
+    "discount": 40,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-MOB-004.svg",
+    "stock": 20,
+    "badge": "নতুন",
+    "featured": false,
+    "active": true,
+    "details": "মোবাইল গেমিংয়ের সময় আঙুলের গ্রিপ ও কন্ট্রোল আরও আরামদায়ক করতে তৈরি ফিঙ্গার স্লিভ।",
+    "specifications": "Stretch fabric • Breathable • Gaming grip",
+    "sku": "SC-MOB-004",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-MOB-004.svg"
+    ],
+    "colors": [
+      "Black",
+      "Grey"
+    ],
+    "sizes": [],
+    "seo_title": "RGB Gaming Finger Sleeves | SparkCart Mall Bangladesh",
+    "meta_description": "মোবাইল গেমিংয়ের সময় আঙুলের গ্রিপ ও কন্ট্রোল আরও আরামদায়ক করতে তৈরি ফিঙ্গার স্লিভ।"
+  },
+  {
+    "name": "Universal Camera Lens Protector",
+    "category": "Mobile Accessories",
+    "price": 250,
+    "old_price": 390,
+    "discount": 36,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-MOB-005.svg",
+    "stock": 20,
+    "badge": "নতুন",
+    "featured": false,
+    "active": true,
+    "details": "স্মার্টফোন ক্যামেরা লেন্সকে দৈনন্দিন স্ক্র্যাচ ও ধুলা থেকে সুরক্ষায় সহায়ক।",
+    "specifications": "Universal style • Transparent • Easy fit",
+    "sku": "SC-MOB-005",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-MOB-005.svg"
+    ],
+    "colors": [
+      "Clear"
+    ],
+    "sizes": [],
+    "seo_title": "Universal Camera Lens Protector | SparkCart Mall Bangladesh",
+    "meta_description": "স্মার্টফোন ক্যামেরা লেন্সকে দৈনন্দিন স্ক্র্যাচ ও ধুলা থেকে সুরক্ষায় সহায়ক।"
+  },
+  {
+    "name": "Mini Portable Blender",
+    "category": "Home & Kitchen",
+    "price": 1450,
+    "old_price": 2290,
+    "discount": 37,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-HOM-001.svg",
+    "stock": 20,
+    "badge": "হট",
+    "featured": true,
+    "active": true,
+    "details": "স্মুদি, শেক ও ছোট পরিমাণের পানীয় তৈরির জন্য কমপ্যাক্ট পোর্টেবল ব্লেন্ডার।",
+    "specifications": "Rechargeable • Portable cup • USB charging",
+    "sku": "SC-HOM-001",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-HOM-001.svg"
+    ],
+    "colors": [
+      "White",
+      "Pink"
+    ],
+    "sizes": [],
+    "seo_title": "Mini Portable Blender | SparkCart Mall Bangladesh",
+    "meta_description": "স্মুদি, শেক ও ছোট পরিমাণের পানীয় তৈরির জন্য কমপ্যাক্ট পোর্টেবল ব্লেন্ডার।"
+  },
+  {
+    "name": "Electric Lunch Box",
+    "category": "Home & Kitchen",
+    "price": 1250,
+    "old_price": 1990,
+    "discount": 37,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-HOM-002.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": true,
+    "active": true,
+    "details": "অফিস, স্কুল বা ভ্রমণে খাবার গরম রাখার জন্য সুবিধাজনক ইলেকট্রিক লাঞ্চ বক্স।",
+    "specifications": "Portable • Electric heating • Food container",
+    "sku": "SC-HOM-002",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-HOM-002.svg"
+    ],
+    "colors": [
+      "Blue",
+      "Green"
+    ],
+    "sizes": [],
+    "seo_title": "Electric Lunch Box | SparkCart Mall Bangladesh",
+    "meta_description": "অফিস, স্কুল বা ভ্রমণে খাবার গরম রাখার জন্য সুবিধাজনক ইলেকট্রিক লাঞ্চ বক্স।"
+  },
+  {
+    "name": "Mini Sewing Machine",
+    "category": "Home & Kitchen",
+    "price": 2190,
+    "old_price": 3490,
+    "discount": 37,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-HOM-003.svg",
+    "stock": 20,
+    "badge": "নতুন",
+    "featured": false,
+    "active": true,
+    "details": "ছোটখাটো সেলাই ও ঘরোয়া DIY কাজের জন্য কমপ্যাক্ট মিনি সেলাই মেশিন।",
+    "specifications": "Mini size • Portable • Home DIY use",
+    "sku": "SC-HOM-003",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-HOM-003.svg"
+    ],
+    "colors": [
+      "White"
+    ],
+    "sizes": [],
+    "seo_title": "Mini Sewing Machine | SparkCart Mall Bangladesh",
+    "meta_description": "ছোটখাটো সেলাই ও ঘরোয়া DIY কাজের জন্য কমপ্যাক্ট মিনি সেলাই মেশিন।"
+  },
+  {
+    "name": "Oil Sprayer Bottle",
+    "category": "Home & Kitchen",
+    "price": 390,
+    "old_price": 650,
+    "discount": 40,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-HOM-004.svg",
+    "stock": 20,
+    "badge": "অফার",
+    "featured": true,
+    "active": true,
+    "details": "রান্না ও সালাদে তেল নিয়ন্ত্রিতভাবে ব্যবহার করার জন্য রিফিলেবল স্প্রে বোতল।",
+    "specifications": "Refillable • Spray nozzle • Kitchen use",
+    "sku": "SC-HOM-004",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-HOM-004.svg"
+    ],
+    "colors": [
+      "Clear"
+    ],
+    "sizes": [],
+    "seo_title": "Oil Sprayer Bottle | SparkCart Mall Bangladesh",
+    "meta_description": "রান্না ও সালাদে তেল নিয়ন্ত্রিতভাবে ব্যবহার করার জন্য রিফিলেবল স্প্রে বোতল।"
+  },
+  {
+    "name": "Kitchen Storage Organizer Set",
+    "category": "Home & Kitchen",
+    "price": 850,
+    "old_price": 1290,
+    "discount": 34,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-HOM-005.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": true,
+    "active": true,
+    "details": "মসলা, ছোট রান্নাঘরের জিনিস ও দৈনন্দিন সামগ্রী গুছিয়ে রাখতে মাল্টি-পারপাস অর্গানাইজার সেট।",
+    "specifications": "Stackable • Space saving • Easy clean",
+    "sku": "SC-HOM-005",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-HOM-005.svg"
+    ],
+    "colors": [
+      "Clear"
+    ],
+    "sizes": [],
+    "seo_title": "Kitchen Storage Organizer Set | SparkCart Mall Bangladesh",
+    "meta_description": "মসলা, ছোট রান্নাঘরের জিনিস ও দৈনন্দিন সামগ্রী গুছিয়ে রাখতে মাল্টি-পারপাস অর্গানাইজার সেট।"
+  },
+  {
+    "name": "Rechargeable Hair Trimmer",
+    "category": "Personal Care & Grooming",
+    "price": 950,
+    "old_price": 1490,
+    "discount": 36,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GRM-001.svg",
+    "stock": 20,
+    "badge": "সেরা বিক্রি",
+    "featured": true,
+    "active": true,
+    "details": "বাড়িতে দ্রুত grooming-এর জন্য রিচার্জেবল হেয়ার ট্রিমার।",
+    "specifications": "Rechargeable • Multiple trim lengths • Compact",
+    "sku": "SC-GRM-001",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GRM-001.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Rechargeable Hair Trimmer | SparkCart Mall Bangladesh",
+    "meta_description": "বাড়িতে দ্রুত grooming-এর জন্য রিচার্জেবল হেয়ার ট্রিমার।"
+  },
+  {
+    "name": "Hair Straightener Ceramic",
+    "category": "Personal Care & Grooming",
+    "price": 890,
+    "old_price": 1450,
+    "discount": 39,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GRM-002.svg",
+    "stock": 20,
+    "badge": "হট",
+    "featured": true,
+    "active": true,
+    "details": "দৈনন্দিন হেয়ার স্টাইলিংয়ের জন্য কমপ্যাক্ট সিরামিক হেয়ার স্ট্রেইটনার।",
+    "specifications": "Ceramic plates • Fast heat-up class • Compact",
+    "sku": "SC-GRM-002",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GRM-002.svg"
+    ],
+    "colors": [
+      "Black",
+      "Pink"
+    ],
+    "sizes": [],
+    "seo_title": "Hair Straightener Ceramic | SparkCart Mall Bangladesh",
+    "meta_description": "দৈনন্দিন হেয়ার স্টাইলিংয়ের জন্য কমপ্যাক্ট সিরামিক হেয়ার স্ট্রেইটনার।"
+  },
+  {
+    "name": "Hair Curler Styling Tool",
+    "category": "Personal Care & Grooming",
+    "price": 1090,
+    "old_price": 1650,
+    "discount": 34,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GRM-003.svg",
+    "stock": 20,
+    "badge": "নতুন",
+    "featured": false,
+    "active": true,
+    "details": "বাড়িতে সহজে কার্ল ও স্টাইল করার জন্য কমপ্যাক্ট হেয়ার কার্লার।",
+    "specifications": "Curling barrel • Compact handle • Home styling",
+    "sku": "SC-GRM-003",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GRM-003.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Hair Curler Styling Tool | SparkCart Mall Bangladesh",
+    "meta_description": "বাড়িতে সহজে কার্ল ও স্টাইল করার জন্য কমপ্যাক্ট হেয়ার কার্লার।"
+  },
+  {
+    "name": "Facial Cleansing Brush",
+    "category": "Personal Care & Grooming",
+    "price": 450,
+    "old_price": 650,
+    "discount": 31,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GRM-004.svg",
+    "stock": 20,
+    "badge": "অফার",
+    "featured": false,
+    "active": true,
+    "details": "স্কিনকেয়ার রুটিনে মৃদু ক্লিনজিংয়ের জন্য সহজে ব্যবহারযোগ্য ফেসিয়াল ক্লিনজিং ব্রাশ।",
+    "specifications": "Soft bristles • Handheld • Easy clean",
+    "sku": "SC-GRM-004",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GRM-004.svg"
+    ],
+    "colors": [
+      "Pink",
+      "White"
+    ],
+    "sizes": [],
+    "seo_title": "Facial Cleansing Brush | SparkCart Mall Bangladesh",
+    "meta_description": "স্কিনকেয়ার রুটিনে মৃদু ক্লিনজিংয়ের জন্য সহজে ব্যবহারযোগ্য ফেসিয়াল ক্লিনজিং ব্রাশ।"
+  },
+  {
+    "name": "Nose & Detail Trimmer",
+    "category": "Personal Care & Grooming",
+    "price": 590,
+    "old_price": 890,
+    "discount": 34,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GRM-005.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": false,
+    "active": true,
+    "details": "দৈনন্দিন personal grooming-এর ছোটখাটো কাজের জন্য কমপ্যাক্ট ট্রিমার।",
+    "specifications": "Compact • Battery powered • Easy grip",
+    "sku": "SC-GRM-005",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GRM-005.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Nose & Detail Trimmer | SparkCart Mall Bangladesh",
+    "meta_description": "দৈনন্দিন personal grooming-এর ছোটখাটো কাজের জন্য কমপ্যাক্ট ট্রিমার।"
+  },
+  {
+    "name": "Trendy Women Handbag",
+    "category": "Women Fashion & Cosmetics",
+    "price": 1190,
+    "old_price": 1990,
+    "discount": 40,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-WFC-001.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": true,
+    "active": true,
+    "details": "দৈনন্দিন ব্যবহার, অফিস ও ক্যাজুয়াল আউটিংয়ের জন্য স্টাইলিশ women handbag।",
+    "specifications": "Shoulder carry • Multiple compartments • Everyday use",
+    "sku": "SC-WFC-001",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-WFC-001.svg"
+    ],
+    "colors": [
+      "Black",
+      "Brown"
+    ],
+    "sizes": [],
+    "seo_title": "Trendy Women Handbag | SparkCart Mall Bangladesh",
+    "meta_description": "দৈনন্দিন ব্যবহার, অফিস ও ক্যাজুয়াল আউটিংয়ের জন্য স্টাইলিশ women handbag।"
+  },
+  {
+    "name": "Skincare Combo Set",
+    "category": "Women Fashion & Cosmetics",
+    "price": 1390,
+    "old_price": 2190,
+    "discount": 37,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-WFC-002.svg",
+    "stock": 20,
+    "badge": "অফার",
+    "featured": true,
+    "active": true,
+    "details": "দৈনন্দিন skincare routine-এর জন্য সাজানো basic skincare combo set।",
+    "specifications": "Combo set • Daily care • Gift friendly",
+    "sku": "SC-WFC-002",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-WFC-002.svg"
+    ],
+    "colors": [
+      "Mixed"
+    ],
+    "sizes": [],
+    "seo_title": "Skincare Combo Set | SparkCart Mall Bangladesh",
+    "meta_description": "দৈনন্দিন skincare routine-এর জন্য সাজানো basic skincare combo set।"
+  },
+  {
+    "name": "Matte Lipstick Set",
+    "category": "Women Fashion & Cosmetics",
+    "price": 490,
+    "old_price": 850,
+    "discount": 42,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-WFC-003.svg",
+    "stock": 20,
+    "badge": "হট",
+    "featured": true,
+    "active": true,
+    "details": "বিভিন্ন লুকের জন্য ব্যবহারযোগ্য কমপ্যাক্ট matte lipstick set।",
+    "specifications": "Matte finish • Multiple shades • Compact",
+    "sku": "SC-WFC-003",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-WFC-003.svg"
+    ],
+    "colors": [
+      "Mixed"
+    ],
+    "sizes": [],
+    "seo_title": "Matte Lipstick Set | SparkCart Mall Bangladesh",
+    "meta_description": "বিভিন্ন লুকের জন্য ব্যবহারযোগ্য কমপ্যাক্ট matte lipstick set।"
+  },
+  {
+    "name": "Jewelry Organizer Box",
+    "category": "Women Fashion & Cosmetics",
+    "price": 650,
+    "old_price": 1090,
+    "discount": 40,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-WFC-004.svg",
+    "stock": 20,
+    "badge": "নতুন",
+    "featured": false,
+    "active": true,
+    "details": "গয়না, রিং ও ছোট accessories গুছিয়ে রাখার জন্য কমপ্যাক্ট organizer box।",
+    "specifications": "Multiple sections • Compact • Travel friendly",
+    "sku": "SC-WFC-004",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-WFC-004.svg"
+    ],
+    "colors": [
+      "Pink",
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Jewelry Organizer Box | SparkCart Mall Bangladesh",
+    "meta_description": "গয়না, রিং ও ছোট accessories গুছিয়ে রাখার জন্য কমপ্যাক্ট organizer box।"
+  },
+  {
+    "name": "Makeup Brush Set",
+    "category": "Women Fashion & Cosmetics",
+    "price": 790,
+    "old_price": 1190,
+    "discount": 34,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-WFC-005.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": true,
+    "active": true,
+    "details": "মেকআপ রুটিনে বিভিন্ন ধাপের জন্য প্রয়োজনীয় basic brush set।",
+    "specifications": "Multiple brushes • Soft bristles • Carry case",
+    "sku": "SC-WFC-005",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-WFC-005.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Makeup Brush Set | SparkCart Mall Bangladesh",
+    "meta_description": "মেকআপ রুটিনে বিভিন্ন ধাপের জন্য প্রয়োজনীয় basic brush set।"
+  },
+  {
+    "name": "Premium Leather Wallet",
+    "category": "Men Fashion & Lifestyle",
+    "price": 950,
+    "old_price": 1490,
+    "discount": 36,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-MEN-001.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": true,
+    "active": true,
+    "details": "কার্ড, ক্যাশ ও দৈনন্দিন প্রয়োজনীয় জিনিস রাখার জন্য স্লিম leather-look wallet।",
+    "specifications": "Card slots • Cash compartment • Slim profile",
+    "sku": "SC-MEN-001",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-MEN-001.svg"
+    ],
+    "colors": [
+      "Black",
+      "Brown"
+    ],
+    "sizes": [],
+    "seo_title": "Premium Leather Wallet | SparkCart Mall Bangladesh",
+    "meta_description": "কার্ড, ক্যাশ ও দৈনন্দিন প্রয়োজনীয় জিনিস রাখার জন্য স্লিম leather-look wallet।"
+  },
+  {
+    "name": "Classic Leather Belt",
+    "category": "Men Fashion & Lifestyle",
+    "price": 690,
+    "old_price": 1090,
+    "discount": 37,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-MEN-002.svg",
+    "stock": 20,
+    "badge": "অফার",
+    "featured": false,
+    "active": true,
+    "details": "অফিস ও ক্যাজুয়াল পোশাকের সঙ্গে মানানসই ক্লাসিক লুকের বেল্ট।",
+    "specifications": "Adjustable fit • Classic buckle • Everyday wear",
+    "sku": "SC-MEN-002",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-MEN-002.svg"
+    ],
+    "colors": [
+      "Black",
+      "Brown"
+    ],
+    "sizes": [],
+    "seo_title": "Classic Leather Belt | SparkCart Mall Bangladesh",
+    "meta_description": "অফিস ও ক্যাজুয়াল পোশাকের সঙ্গে মানানসই ক্লাসিক লুকের বেল্ট।"
+  },
+  {
+    "name": "Classic UV Sunglasses",
+    "category": "Men Fashion & Lifestyle",
+    "price": 890,
+    "old_price": 1490,
+    "discount": 40,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-MEN-003.svg",
+    "stock": 20,
+    "badge": "হট",
+    "featured": true,
+    "active": true,
+    "details": "ক্যাজুয়াল আউটিং ও দৈনন্দিন ব্যবহারের জন্য ক্লাসিক স্টাইলের সানগ্লাস।",
+    "specifications": "Classic frame • UV-style lens • Lightweight",
+    "sku": "SC-MEN-003",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-MEN-003.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Classic UV Sunglasses | SparkCart Mall Bangladesh",
+    "meta_description": "ক্যাজুয়াল আউটিং ও দৈনন্দিন ব্যবহারের জন্য ক্লাসিক স্টাইলের সানগ্লাস।"
+  },
+  {
+    "name": "Men Polo T-Shirt",
+    "category": "Men Fashion & Lifestyle",
+    "price": 790,
+    "old_price": 1250,
+    "discount": 37,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-MEN-004.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": true,
+    "active": true,
+    "details": "ক্যাজুয়াল ও স্মার্ট-ক্যাজুয়াল লুকের জন্য আরামদায়ক polo T-shirt।",
+    "specifications": "Cotton-blend feel • Short sleeve • Casual fit",
+    "sku": "SC-MEN-004",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-MEN-004.svg"
+    ],
+    "colors": [
+      "Black",
+      "Navy",
+      "White"
+    ],
+    "sizes": [
+      "M",
+      "L",
+      "XL"
+    ],
+    "seo_title": "Men Polo T-Shirt | SparkCart Mall Bangladesh",
+    "meta_description": "ক্যাজুয়াল ও স্মার্ট-ক্যাজুয়াল লুকের জন্য আরামদায়ক polo T-shirt।"
+  },
+  {
+    "name": "Casual Analog Watch",
+    "category": "Men Fashion & Lifestyle",
+    "price": 1190,
+    "old_price": 1590,
+    "discount": 25,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-MEN-005.svg",
+    "stock": 20,
+    "badge": "নতুন",
+    "featured": false,
+    "active": true,
+    "details": "অফিস, ক্যাজুয়াল ও গিফটিংয়ের জন্য মিনিমাল ডিজাইনের analog watch।",
+    "specifications": "Analog dial • Quartz style • Casual strap",
+    "sku": "SC-MEN-005",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-MEN-005.svg"
+    ],
+    "colors": [
+      "Black",
+      "Brown"
+    ],
+    "sizes": [],
+    "seo_title": "Casual Analog Watch | SparkCart Mall Bangladesh",
+    "meta_description": "অফিস, ক্যাজুয়াল ও গিফটিংয়ের জন্য মিনিমাল ডিজাইনের analog watch।"
+  },
+  {
+    "name": "Motion Sensor Night Light",
+    "category": "Smart Home & Lighting",
+    "price": 750,
+    "old_price": 1190,
+    "discount": 37,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-LGT-001.svg",
+    "stock": 20,
+    "badge": "হট",
+    "featured": true,
+    "active": true,
+    "details": "সিঁড়ি, করিডোর, বেডসাইড বা আলমারির জন্য motion-activated night light।",
+    "specifications": "Motion sensor • LED • Compact • Indoor use",
+    "sku": "SC-LGT-001",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-LGT-001.svg"
+    ],
+    "colors": [
+      "White"
+    ],
+    "sizes": [],
+    "seo_title": "Motion Sensor Night Light | SparkCart Mall Bangladesh",
+    "meta_description": "সিঁড়ি, করিডোর, বেডসাইড বা আলমারির জন্য motion-activated night light।"
+  },
+  {
+    "name": "RGB LED Strip Light 5m",
+    "category": "Smart Home & Lighting",
+    "price": 890,
+    "old_price": 1490,
+    "discount": 40,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-LGT-002.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": true,
+    "active": true,
+    "details": "রুম, ডেস্ক ও gaming setup সাজাতে 5m RGB LED strip light।",
+    "specifications": "5m • RGB lighting • Decorative use",
+    "sku": "SC-LGT-002",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-LGT-002.svg"
+    ],
+    "colors": [
+      "RGB"
+    ],
+    "sizes": [],
+    "seo_title": "RGB LED Strip Light 5m | SparkCart Mall Bangladesh",
+    "meta_description": "রুম, ডেস্ক ও gaming setup সাজাতে 5m RGB LED strip light।"
+  },
+  {
+    "name": "Sunset Projection Lamp",
+    "category": "Smart Home & Lighting",
+    "price": 690,
+    "old_price": 1090,
+    "discount": 37,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-LGT-003.svg",
+    "stock": 20,
+    "badge": "নতুন",
+    "featured": true,
+    "active": true,
+    "details": "রুম ডেকোরেশন ও content setup-এর জন্য sunset-style ambient lamp।",
+    "specifications": "Projection lamp • Adjustable angle • Indoor use",
+    "sku": "SC-LGT-003",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-LGT-003.svg"
+    ],
+    "colors": [
+      "Orange"
+    ],
+    "sizes": [],
+    "seo_title": "Sunset Projection Lamp | SparkCart Mall Bangladesh",
+    "meta_description": "রুম ডেকোরেশন ও content setup-এর জন্য sunset-style ambient lamp।"
+  },
+  {
+    "name": "Rechargeable Desk Lamp",
+    "category": "Smart Home & Lighting",
+    "price": 950,
+    "old_price": 1590,
+    "discount": 40,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-LGT-004.svg",
+    "stock": 20,
+    "badge": "অফার",
+    "featured": true,
+    "active": true,
+    "details": "পড়াশোনা, অফিস ও bedside use-এর জন্য rechargeable desk lamp।",
+    "specifications": "Rechargeable • Desk size • Adjustable angle",
+    "sku": "SC-LGT-004",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-LGT-004.svg"
+    ],
+    "colors": [
+      "White",
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Rechargeable Desk Lamp | SparkCart Mall Bangladesh",
+    "meta_description": "পড়াশোনা, অফিস ও bedside use-এর জন্য rechargeable desk lamp।"
+  },
+  {
+    "name": "USB LED Night Lamp",
+    "category": "Smart Home & Lighting",
+    "price": 590,
+    "old_price": 890,
+    "discount": 34,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-LGT-005.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": false,
+    "active": true,
+    "details": "ডেস্ক, bedside বা ছোট workspace-এ soft lighting-এর জন্য USB LED lamp।",
+    "specifications": "USB powered • Compact • Indoor use",
+    "sku": "SC-LGT-005",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-LGT-005.svg"
+    ],
+    "colors": [
+      "White"
+    ],
+    "sizes": [],
+    "seo_title": "USB LED Night Lamp | SparkCart Mall Bangladesh",
+    "meta_description": "ডেস্ক, bedside বা ছোট workspace-এ soft lighting-এর জন্য USB LED lamp।"
+  },
+  {
+    "name": "RGB Gaming Mouse",
+    "category": "Computer & Gaming Accessories",
+    "price": 650,
+    "old_price": 990,
+    "discount": 34,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GAM-001.svg",
+    "stock": 20,
+    "badge": "সেরা বিক্রি",
+    "featured": true,
+    "active": true,
+    "details": "PC gaming ও everyday work-এর জন্য RGB lighting সহ ergonomic gaming mouse।",
+    "specifications": "USB • RGB lighting • Ergonomic grip",
+    "sku": "SC-GAM-001",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GAM-001.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "RGB Gaming Mouse | SparkCart Mall Bangladesh",
+    "meta_description": "PC gaming ও everyday work-এর জন্য RGB lighting সহ ergonomic gaming mouse।"
+  },
+  {
+    "name": "Mechanical Gaming Keyboard",
+    "category": "Computer & Gaming Accessories",
+    "price": 2190,
+    "old_price": 2990,
+    "discount": 27,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GAM-002.svg",
+    "stock": 20,
+    "badge": "হট",
+    "featured": true,
+    "active": true,
+    "details": "গেমিং ও টাইপিংয়ের জন্য mechanical-style keyboard with RGB lighting।",
+    "specifications": "USB • Mechanical-style switches • RGB",
+    "sku": "SC-GAM-002",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GAM-002.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Mechanical Gaming Keyboard | SparkCart Mall Bangladesh",
+    "meta_description": "গেমিং ও টাইপিংয়ের জন্য mechanical-style keyboard with RGB lighting।"
+  },
+  {
+    "name": "Large RGB Gaming Mousepad",
+    "category": "Computer & Gaming Accessories",
+    "price": 790,
+    "old_price": 1190,
+    "discount": 34,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GAM-003.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": false,
+    "active": true,
+    "details": "মাউসের smooth movement ও gaming desk setup-এর জন্য বড় RGB mousepad।",
+    "specifications": "Large surface • RGB edge • Non-slip base",
+    "sku": "SC-GAM-003",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GAM-003.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Large RGB Gaming Mousepad | SparkCart Mall Bangladesh",
+    "meta_description": "মাউসের smooth movement ও gaming desk setup-এর জন্য বড় RGB mousepad।"
+  },
+  {
+    "name": "Headphone Stand",
+    "category": "Computer & Gaming Accessories",
+    "price": 550,
+    "old_price": 850,
+    "discount": 35,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GAM-004.svg",
+    "stock": 20,
+    "badge": "নতুন",
+    "featured": false,
+    "active": true,
+    "details": "ডেস্ক গুছিয়ে রাখতে headphone ও gaming headset রাখার স্ট্যান্ড।",
+    "specifications": "Desk stand • Space saving • Stable base",
+    "sku": "SC-GAM-004",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GAM-004.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Headphone Stand | SparkCart Mall Bangladesh",
+    "meta_description": "ডেস্ক গুছিয়ে রাখতে headphone ও gaming headset রাখার স্ট্যান্ড।"
+  },
+  {
+    "name": "Laptop Cooling Pad",
+    "category": "Computer & Gaming Accessories",
+    "price": 990,
+    "old_price": 1490,
+    "discount": 34,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-GAM-005.svg",
+    "stock": 20,
+    "badge": "অফার",
+    "featured": true,
+    "active": true,
+    "details": "ল্যাপটপের নিচে airflow বাড়াতে সহায়ক cooling pad—gaming ও heavy use-এর জন্য।",
+    "specifications": "USB powered • Fan cooling • Laptop compatible",
+    "sku": "SC-GAM-005",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-GAM-005.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Laptop Cooling Pad | SparkCart Mall Bangladesh",
+    "meta_description": "ল্যাপটপের নিচে airflow বাড়াতে সহায়ক cooling pad—gaming ও heavy use-এর জন্য।"
+  },
+  {
+    "name": "Bike Mobile Holder",
+    "category": "Car & Bike Accessories",
+    "price": 390,
+    "old_price": 650,
+    "discount": 40,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-AUTO-001.svg",
+    "stock": 20,
+    "badge": "সেরা বিক্রি",
+    "featured": true,
+    "active": true,
+    "details": "বাইকে navigation ও প্রয়োজনীয় ফোন viewing-এর জন্য handlebar mobile holder।",
+    "specifications": "Handlebar mount • Adjustable grip • Phone compatible",
+    "sku": "SC-AUTO-001",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-AUTO-001.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Bike Mobile Holder | SparkCart Mall Bangladesh",
+    "meta_description": "বাইকে navigation ও প্রয়োজনীয় ফোন viewing-এর জন্য handlebar mobile holder।"
+  },
+  {
+    "name": "Helmet Bluetooth Intercom",
+    "category": "Car & Bike Accessories",
+    "price": 1890,
+    "old_price": 2990,
+    "discount": 37,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-AUTO-002.svg",
+    "stock": 20,
+    "badge": "হট",
+    "featured": true,
+    "active": true,
+    "details": "রাইডের সময় compatible helmet-এ Bluetooth calling ও audio-এর জন্য intercom device।",
+    "specifications": "Bluetooth • Helmet compatible • Rechargeable",
+    "sku": "SC-AUTO-002",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-AUTO-002.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Helmet Bluetooth Intercom | SparkCart Mall Bangladesh",
+    "meta_description": "রাইডের সময় compatible helmet-এ Bluetooth calling ও audio-এর জন্য intercom device।"
+  },
+  {
+    "name": "Car Cleaning Duster",
+    "category": "Car & Bike Accessories",
+    "price": 290,
+    "old_price": 490,
+    "discount": 41,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-AUTO-003.svg",
+    "stock": 20,
+    "badge": "অফার",
+    "featured": false,
+    "active": true,
+    "details": "গাড়ির dashboard ও interior-এর ধুলো পরিষ্কারে ব্যবহারযোগ্য soft cleaning duster।",
+    "specifications": "Soft microfiber • Reusable • Interior cleaning",
+    "sku": "SC-AUTO-003",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-AUTO-003.svg"
+    ],
+    "colors": [
+      "Grey"
+    ],
+    "sizes": [],
+    "seo_title": "Car Cleaning Duster | SparkCart Mall Bangladesh",
+    "meta_description": "গাড়ির dashboard ও interior-এর ধুলো পরিষ্কারে ব্যবহারযোগ্য soft cleaning duster।"
+  },
+  {
+    "name": "Anti-Glare Side Mirror Pair",
+    "category": "Car & Bike Accessories",
+    "price": 450,
+    "old_price": 790,
+    "discount": 43,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-AUTO-004.svg",
+    "stock": 20,
+    "badge": "নতুন",
+    "featured": false,
+    "active": true,
+    "details": "রাইডিংয়ের সময় glare কমাতে সহায়ক anti-glare style side mirror pair।",
+    "specifications": "Pair set • Wide-view style • Universal fit class",
+    "sku": "SC-AUTO-004",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-AUTO-004.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Anti-Glare Side Mirror Pair | SparkCart Mall Bangladesh",
+    "meta_description": "রাইডিংয়ের সময় glare কমাতে সহায়ক anti-glare style side mirror pair।"
+  },
+  {
+    "name": "Car/Bike Mini Air Pump",
+    "category": "Car & Bike Accessories",
+    "price": 1150,
+    "old_price": 1490,
+    "discount": 23,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-AUTO-005.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": true,
+    "active": true,
+    "details": "জরুরি সময়ে টায়ারে বাতাস দেওয়ার জন্য portable mini air pump।",
+    "specifications": "Portable • Digital-style display • USB/12V class",
+    "sku": "SC-AUTO-005",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-AUTO-005.svg"
+    ],
+    "colors": [
+      "Black"
+    ],
+    "sizes": [],
+    "seo_title": "Car/Bike Mini Air Pump | SparkCart Mall Bangladesh",
+    "meta_description": "জরুরি সময়ে টায়ারে বাতাস দেওয়ার জন্য portable mini air pump।"
+  },
+  {
+    "name": "Educational Learning Toy Set",
+    "category": "Kids & Baby Products",
+    "price": 690,
+    "old_price": 990,
+    "discount": 30,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-KID-001.svg",
+    "stock": 20,
+    "badge": "জনপ্রিয়",
+    "featured": true,
+    "active": true,
+    "details": "শিশুর basic learning, matching ও hand-eye coordination practice-এর জন্য educational toy set।",
+    "specifications": "Learning set • Child-friendly design • Home activity",
+    "sku": "SC-KID-001",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-KID-001.svg"
+    ],
+    "colors": [
+      "Mixed"
+    ],
+    "sizes": [],
+    "seo_title": "Educational Learning Toy Set | SparkCart Mall Bangladesh",
+    "meta_description": "শিশুর basic learning, matching ও hand-eye coordination practice-এর জন্য educational toy set।"
+  },
+  {
+    "name": "LCD Writing Tablet 8.5-inch",
+    "category": "Kids & Baby Products",
+    "price": 490,
+    "old_price": 850,
+    "discount": 42,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-KID-002.svg",
+    "stock": 20,
+    "badge": "সেরা বিক্রি",
+    "featured": true,
+    "active": true,
+    "details": "শিশুর drawing, writing ও practice-এর জন্য reusable LCD writing tablet।",
+    "specifications": "8.5-inch class • Reusable screen • Button erase",
+    "sku": "SC-KID-002",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-KID-002.svg"
+    ],
+    "colors": [
+      "Black",
+      "Pink",
+      "Blue"
+    ],
+    "sizes": [],
+    "seo_title": "LCD Writing Tablet 8.5-inch | SparkCart Mall Bangladesh",
+    "meta_description": "শিশুর drawing, writing ও practice-এর জন্য reusable LCD writing tablet।"
+  },
+  {
+    "name": "Baby Care Kit",
+    "category": "Kids & Baby Products",
+    "price": 890,
+    "old_price": 1490,
+    "discount": 40,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-KID-003.svg",
+    "stock": 20,
+    "badge": "অফার",
+    "featured": false,
+    "active": true,
+    "details": "শিশুর দৈনন্দিন care routine-এর জন্য basic baby care accessories kit।",
+    "specifications": "Multi-item kit • Portable pouch • Everyday use",
+    "sku": "SC-KID-003",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-KID-003.svg"
+    ],
+    "colors": [
+      "Mixed"
+    ],
+    "sizes": [],
+    "seo_title": "Baby Care Kit | SparkCart Mall Bangladesh",
+    "meta_description": "শিশুর দৈনন্দিন care routine-এর জন্য basic baby care accessories kit।"
+  },
+  {
+    "name": "Smart Learning Board Book Set",
+    "category": "Kids & Baby Products",
+    "price": 1190,
+    "old_price": 1590,
+    "discount": 25,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-KID-004.svg",
+    "stock": 20,
+    "badge": "নতুন",
+    "featured": true,
+    "active": true,
+    "details": "অক্ষর, সংখ্যা ও basic concepts শেখাতে activity-based board book set।",
+    "specifications": "Board pages • Learning activities • Gift friendly",
+    "sku": "SC-KID-004",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-KID-004.svg"
+    ],
+    "colors": [
+      "Mixed"
+    ],
+    "sizes": [],
+    "seo_title": "Smart Learning Board Book Set | SparkCart Mall Bangladesh",
+    "meta_description": "অক্ষর, সংখ্যা ও basic concepts শেখাতে activity-based board book set।"
+  },
+  {
+    "name": "Kids Musical Activity Toy",
+    "category": "Kids & Baby Products",
+    "price": 650,
+    "old_price": 1090,
+    "discount": 40,
+    "rating": 4.5,
+    "reviews": 20,
+    "image": "assets/products/SC-KID-005.svg",
+    "stock": 20,
+    "badge": "হট",
+    "featured": false,
+    "active": true,
+    "details": "শিশুর sensory play ও simple musical activity-এর জন্য colourful activity toy।",
+    "specifications": "Musical activity • Child-friendly • Indoor play",
+    "sku": "SC-KID-005",
+    "video_url": null,
+    "images": [
+      "assets/products/SC-KID-005.svg"
+    ],
+    "colors": [
+      "Mixed"
+    ],
+    "sizes": [],
+    "seo_title": "Kids Musical Activity Toy | SparkCart Mall Bangladesh",
+    "meta_description": "শিশুর sensory play ও simple musical activity-এর জন্য colourful activity toy।"
+  }
+]

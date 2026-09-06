@@ -1,0 +1,25 @@
+SPARKCART MALL — FINAL FEATURE VERSION
+
+DO THIS:
+1. GitHub: replace the current website files with this ZIP's files.
+2. Supabase SQL Editor: run ONLY `SPARKCART_FEATURES_MIGRATION.sql`.
+3. Do NOT run `supabase.sql` for this upgrade.
+4. Do NOT run `CATALOG_PRICE_IMAGE_FIX.sql` unless you specifically want the catalog price/image changes.
+5. Login to /admin/ and go to Marketing -> Payment Settings.
+6. Enter your real bKash/Nagad/Rocket number and Save.
+7. Test:
+   - open a product with ?product=SKU
+   - add a COD test order
+   - open Order Tracking and use the returned Order ID + phone
+   - check Admin -> Orders -> Details
+   - test payment form only after setting merchant numbers
+
+SAFETY:
+- No DROP TABLE.
+- No DELETE FROM products/orders/customers.
+- No product seed is required for this feature upgrade.
+- The migration only adds feature columns/tables/functions/policies/triggers/indexes.
+
+Facebook product link format:
+https://sparkcartmall.Cloudflare Pages.app/?product=SC-GAD-001
+Replace the SKU with the target product SKU.

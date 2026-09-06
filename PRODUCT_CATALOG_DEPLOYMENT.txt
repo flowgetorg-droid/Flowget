@@ -1,0 +1,22 @@
+SPARKCART MALL — PRODUCT CATALOG UPDATE
+
+1) GitHub/Netlify
+- Replace your current project files with this ZIP contents.
+- The existing Supabase URL/anon publishable key in index.html is preserved.
+
+2) Supabase
+- Open Supabase SQL Editor.
+- Run supabase.sql from top to bottom.
+- It adds SEO columns if missing and seeds/updates 50 products by unique product name.
+- Existing orders, RLS and other tables are not deleted.
+
+3) Product photos
+- Product records use remote Unsplash image URLs so the ZIP stays lightweight.
+- For production, download/replace these with supplier-owned or licensed product photos and upload them through the existing Admin > Products image uploader.
+
+4) Admin
+- Existing admin dashboard remains compatible.
+- New products include SKU, details, specifications, colors/sizes and SEO metadata.
+
+5) Safety/quality
+- Verify supplier specs, warranty, certifications, cosmetic ingredients, age suitability and actual stock before advertising any SKU.

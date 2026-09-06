@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 140" role="img" aria-label="FlowGet logo">
+<rect width="520" height="140" rx="32" fill="#6d28d9"/>
+<circle cx="72" cy="70" r="43" fill="#ffffff" opacity="0.98"/>
+<path d="M52 48h39v15H69v12h20v14H69v21H52z" fill="#6d28d9"/>
+<text x="130" y="91" font-family="Arial,Helvetica,sans-serif" font-size="62" font-weight="800" fill="#ffffff">FlowGet</text>
+</svg>
