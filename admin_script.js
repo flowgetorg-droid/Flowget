@@ -37,14 +37,13 @@ function waOrder(id){const o=orders.find(x=>x.id===id);if(!o)return;const msg=`�
 let orderMap=null,orderMapLayer=null;const districtCoords={"ঢাকা":[23.8103,90.4125],"চট্টগ্রাম":[22.3569,91.7832],"কুমিল্লা":[23.4607,91.1809],"নোয়াখালী":[22.8696,91.0995],"ফেনী":[23.0159,91.3976],"লক্ষ্মীপুর":[22.9447,90.8412],"চাঁদপুর":[23.2333,90.6712],"ব্রাহ্মণবাড়িয়া":[23.9571,91.1119],"সিলেট":[24.8949,91.8687],"রাজশাহী":[24.3745,88.6042],"খুলনা":[22.8456,89.5403],"বরিশাল":[22.7010,90.3535],"রংপুর":[25.7439,89.2752],"ময়মনসিংহ":[24.7471,90.4203],"গাজীপুর":[24.0023,90.4264],"নারায়ণগঞ্জ":[23.6238,90.5000],"কক্সবাজার":[21.4272,92.0058],"যশোর":[23.1664,89.2089],"বগুড়া":[24.8465,89.3770],"দিনাজপুর":[25.6279,88.6332]};
 function renderOrderMap(){const el=$("orderMap");if(!el)return;if(!orderMap){orderMap=L.map(el).setView([23.685,90.3563],7);L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:18,attribution:"© OpenStreetMap"}).addTo(orderMap);orderMapLayer=L.layerGroup().addTo(orderMap)}if(orderMapLayer)orderMapLayer.clearLayers();const counts={};orders.forEach(o=>{if(o.status!=="cancelled")counts[o.district]=(counts[o.district]||0)+1});Object.entries(counts).forEach(([d,n])=>{const c=districtCoords[d]||districtCoords["ঢাকা"];L.marker(c,{title:d}).addTo(orderMapLayer).bindPopup(`<b>${esc(d)}</b><br>${n}টি order`)});setTimeout(()=>orderMap.invalidateSize(),100)}
 function showTab(t){
- const names=["dashboard","orders","products","reviews","marketing","sellers","visitors"];
+ const names=["dashboard","orders","products","reviews","marketing","visitors"];
  names.forEach(x=>{const el=$(x+"Tab"),tab=$("tab"+x.charAt(0).toUpperCase()+x.slice(1));if(el)el.classList.toggle("hidden",x!==t);if(tab)tab.classList.toggle("active",x===t)});
  if(t==="dashboard"){loadDashboard();setTimeout(renderOrderMap,100)}
  if(t==="reviews")loadReviews();
  if(t==="orders")renderOrders();
  if(t==="products")renderProducts();
  if(t==="marketing"){loadCoupons();loadSpinSettings();loadPaymentSettings();loadBanners()}
- if(t==="sellers")loadSellers();
  if(t==="visitors")loadVisitors();
 }
 
@@ -124,8 +123,8 @@ async function loadSiteSettings(){
  if(error){if(err){err.textContent="Site settings load failed: "+error.message;err.classList.remove("hidden")}return}
  siteSettingsAdmin=data||{};
  $("siteBrandName").value=data?.brand_name||"FlowGet"; $("siteTitleText").value=data?.site_title||"FlowGet"; $("siteTopbar").value=data?.topbar_text||"";
- $("siteHeroBadge").value=data?.hero_badge||"🔥 FLASH SALE"; $("siteHeroTitle").value=data?.hero_title||""; $("siteHeroSubtitle").value=data?.hero_subtitle||""; $("siteHeroButton").value=data?.hero_button||"অফার দেখুন";
- $("siteSellerTitle").value=data?.seller_title||""; $("siteSellerText").value=data?.seller_text||""; $("siteWhatsapp").value=data?.whatsapp_number||"01822024595"; $("siteEmail").value=data?.contact_email||"flowget.org@gmail.com"; $("siteFooterText").value=data?.footer_text||""; $("siteLogoUrl").value=data?.logo_url||"";
+ $("siteHeroBadge").value=data?.hero_badge||"🔥 FLASH SALE"; $("siteHeroTitle").value=data?.hero_title||""; $("siteHeroSubtitle").value=data?.hero_subtitle||""; $("siteHeroButton").value=data?.hero_button||"অফার দেখুন"; if($("siteTextOverrides"))$("siteTextOverrides").value=JSON.stringify(data?.custom_texts||{},null,2);
+ $("siteWhatsapp").value=data?.whatsapp_number||"01822024595"; $("siteEmail").value=data?.contact_email||"flowget.org@gmail.com"; $("siteFooterText").value=data?.footer_text||""; $("siteLogoUrl").value=data?.logo_url||"";
  if(data?.logo_url){$("siteLogoPreview").src=data.logo_url;$("siteLogoPreview").classList.remove("hidden")}
 }
 function previewSiteLogo(){const f=$("siteLogoFile")?.files?.[0]; if(!f)return; $("siteLogoName").textContent=`${f.name} (${Math.round(f.size/1024)} KB)`; const img=$("siteLogoPreview"); img.src=URL.createObjectURL(f); img.classList.remove("hidden");}
@@ -135,7 +134,7 @@ async function uploadSiteLogo(file){
 }
 async function saveSiteSettings(){
  const err=$("siteSetErr"),msg=$("siteSetMsg"); err.classList.add("hidden");
- const payload={brand_name:$("siteBrandName").value.trim()||"FlowGet",site_title:$("siteTitleText").value.trim()||"FlowGet",topbar_text:$("siteTopbar").value.trim(),hero_badge:$("siteHeroBadge").value.trim(),hero_title:$("siteHeroTitle").value.trim(),hero_subtitle:$("siteHeroSubtitle").value.trim(),hero_button:$("siteHeroButton").value.trim(),seller_title:$("siteSellerTitle").value.trim(),seller_text:$("siteSellerText").value.trim(),whatsapp_number:$("siteWhatsapp").value.trim(),contact_email:$("siteEmail").value.trim(),footer_text:$("siteFooterText").value.trim(),logo_url:$("siteLogoUrl").value.trim()||null,updated_at:new Date().toISOString()};
+ let customTexts={};try{customTexts=JSON.parse($("siteTextOverrides")?.value||"{}")}catch(e){err.textContent="Extra Website Text JSON invalid";err.classList.remove("hidden");return} const payload={custom_texts:customTexts,brand_name:$("siteBrandName").value.trim()||"FlowGet",site_title:$("siteTitleText").value.trim()||"FlowGet",topbar_text:$("siteTopbar").value.trim(),hero_badge:$("siteHeroBadge").value.trim(),hero_title:$("siteHeroTitle").value.trim(),hero_subtitle:$("siteHeroSubtitle").value.trim(),hero_button:$("siteHeroButton").value.trim(),whatsapp_number:$("siteWhatsapp").value.trim(),contact_email:$("siteEmail").value.trim(),footer_text:$("siteFooterText").value.trim(),logo_url:$("siteLogoUrl").value.trim()||null,updated_at:new Date().toISOString()};
  try{const f=$("siteLogoFile").files[0]; if(f)payload.logo_url=await uploadSiteLogo(f); const {error}=await sb.from("site_settings").update(payload).eq("id",1); if(error)throw error; $("siteLogoUrl").value=payload.logo_url||""; msg.textContent="✅ Site settings saved. Website reload করলে নতুন logo/text দেখা যাবে."; msg.classList.remove("hidden"); setTimeout(()=>msg.classList.add("hidden"),3500);}catch(e){err.textContent=e.message||"Save failed";err.classList.remove("hidden")}
 }
 

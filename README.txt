@@ -1,4 +1,4 @@
-SPARKCART MALL — MOBILE ADMIN FINAL
+FLOWGET MALL — MOBILE ADMIN FINAL
 
 FILES
 - index.html                 = customer website
@@ -23,12 +23,12 @@ IMPORTANT FIRST STEP
 2. Paste/run the complete supabase.sql ONCE.
 3. Supabase Dashboard -> Authentication -> Users
 4. Make sure the admin account exists:
-   sparkcartmallbd@gmail.com
+   flowgetmallbd@gmail.com
    Use the password you already set for this account.
 5. If that account did not exist when the SQL was run, create it and run the admin insert section again:
    insert into public.admin_users(user_id,email)
    select id,email from auth.users
-   where lower(email)=lower('sparkcartmallbd@gmail.com')
+   where lower(email)=lower('flowgetmallbd@gmail.com')
    on conflict(user_id) do update set email=excluded.email;
 
 GITHUB / NETLIFY

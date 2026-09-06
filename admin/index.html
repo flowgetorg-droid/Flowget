@@ -37,7 +37,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.wrap{max-width:
 
 <div id="app"><div class="wrap">
 <div class="top"><div class="brand">🛍️ FlowGet Admin</div><div class="spacer muted" id="who"></div><button class="btn secondary" onclick="refreshAll()">↻ Refresh</button><button class="btn danger" onclick="logout()">Logout</button></div>
-<div class="tabs"><button class="tab active" id="tabDashboard" onclick="showTab('dashboard')">📊 Dashboard</button><button class="tab" id="tabOrders" onclick="showTab('orders')">🛒 Orders</button><button class="tab" id="tabProducts" onclick="showTab('products')">📦 Products</button><button class="tab" id="tabReviews" onclick="showTab('reviews')">⭐ Reviews</button><button class="tab" id="tabMarketing" onclick="showTab('marketing')">🎟️ Marketing</button><button class="tab" id="tabSellers" onclick="showTab('sellers')">🏪 Sellers</button><button class="tab" id="tabVisitors" onclick="showTab('visitors')">📊 Visitor Activity</button><button class="tab" id="tabSettings" onclick="showTab('settings')">⚙️ Site Settings</button></div>
+<div class="tabs"><button class="tab active" id="tabDashboard" onclick="showTab('dashboard')">📊 Dashboard</button><button class="tab" id="tabOrders" onclick="showTab('orders')">🛒 Orders</button><button class="tab" id="tabProducts" onclick="showTab('products')">📦 Products</button><button class="tab" id="tabReviews" onclick="showTab('reviews')">⭐ Reviews</button><button class="tab" id="tabMarketing" onclick="showTab('marketing')">🎟️ Marketing</button><button class="tab" id="tabVisitors" onclick="showTab('visitors')">📊 Visitor Activity</button><button class="tab" id="tabSettings" onclick="showTab('settings')">⚙️ Site Settings</button></div>
 
 <section id="dashboardTab">
 <div class="stats">
@@ -132,7 +132,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.wrap{max-width:
 <div class="two"><div class="field"><label>Hero Badge</label><input id="siteHeroBadge" placeholder="🔥 FLASH SALE"></div><div class="field"><label>Hero Button Text</label><input id="siteHeroButton" placeholder="অফার দেখুন"></div></div>
 <div class="field"><label>Hero Main Title</label><input id="siteHeroTitle" placeholder="প্রতিদিনের প্রয়োজনীয় পণ্য, এক জায়গায়"></div>
 <div class="field"><label>Hero Subtitle</label><textarea id="siteHeroSubtitle" rows="3" placeholder="বিশেষ অফার, দ্রুত ডেলিভারি..."></textarea></div>
-<div class="two"><div class="field"><label>Seller Section Title</label><input id="siteSellerTitle"></div><div class="field"><label>Seller Section Text</label><input id="siteSellerText"></div></div>
+
 <div class="two"><div class="field"><label>WhatsApp Number</label><input id="siteWhatsapp" placeholder="01822024595"></div><div class="field"><label>Contact Email</label><input id="siteEmail" type="email" placeholder="flowget.org@gmail.com"></div></div>
 <div class="field"><label>Footer Text</label><input id="siteFooterText" placeholder="স্মার্ট পণ্য, সহজ কেনাকাটা।"></div>
 <div class="field"><label>Logo Upload <span class="muted">(PNG/JPG/WebP/SVG)</span></label><input id="siteLogoFile" type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" onchange="previewSiteLogo()"><div id="siteLogoName" class="muted">নতুন logo নির্বাচিত হয়নি</div><img id="siteLogoPreview" class="preview hidden" alt="Logo preview"></div>
@@ -140,7 +140,7 @@ button,input,select,textarea{font:inherit}button{cursor:pointer}.wrap{max-width:
 <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" onclick="saveSiteSettings()">💾 Save Site Settings</button><button class="btn secondary" onclick="loadSiteSettings()">↻ Refresh</button></div>
 </div></section>
 <section id="visitorsTab" class="hidden"><div class="formbox"><h2>📊 Visitor Activity</h2><p class="muted">Anonymous visitor journey only. Phone/email automatically collected here নয়।</p><div class="visitorStats"><div class="visitorStat">Total Visitors<b id="visitorTotal">0</b></div><div class="visitorStat">Recent Active<b id="visitorActive">0</b></div><div class="visitorStat">Product Views<b id="visitorProductViews">0</b></div><div class="visitorStat">Add to Cart<b id="visitorAdds">0</b></div><div class="visitorStat">Checkout Events<b id="visitorCheckouts">0</b></div><div class="visitorStat">Completed Orders<b id="visitorOrders">0</b></div></div><div class="toolbar"><button class="btn primary" onclick="loadVisitors()">↻ Refresh Visitors</button></div><div id="visitorDetail" class="panel hidden"></div><div id="visitorList" class="visitorList"></div></div></section>
-<section id="sellersTab" class="hidden"><div class="formbox"><h2>🏪 Seller Applications</h2><p class="muted">Become a Seller applications review, approve বা reject করুন।</p><div class="toolbar"><select id="sellerStatusFilter" onchange="loadSellers()"><option value="">সব</option><option value="pending">Pending</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></div><div id="sellers" class="orders"></div></div></section>
+
 <section id="productsTab" class="hidden">
 <div class="formbox">
 <h2 id="formTitle">➕ নতুন Product</h2><div id="productErr" class="err hidden"></div>
@@ -179,14 +179,13 @@ const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&
 const $=id=>document.getElementById(id);
 
 function showTab(name){
- const names=["dashboard","orders","products","reviews","marketing","sellers","visitors","settings"];
+ const names=["dashboard","orders","products","reviews","marketing","visitors","settings"];
  names.forEach(n=>{const el=$(n+"Tab"),tab=$("tab"+n.charAt(0).toUpperCase()+n.slice(1));if(el)el.classList.toggle("hidden",n!==name);if(tab)tab.classList.toggle("active",n===name)});
  if(name==="dashboard"){loadDashboard();setTimeout(renderOrderMap,100)}
  if(name==="orders")renderOrders();
  if(name==="products")renderProducts();
  if(name==="reviews")loadReviews();
  if(name==="marketing"){loadCoupons();loadSpinSettings();loadPaymentSettings();loadBanners()}
- if(name==="sellers")loadSellers();
  if(name==="visitors")loadVisitors();
 }
 
@@ -198,7 +197,7 @@ async function loadSiteSettings(){
  siteSettingsAdmin=data||{};
  $("siteBrandName").value=data?.brand_name||"FlowGet"; $("siteTitleText").value=data?.site_title||"FlowGet"; $("siteTopbar").value=data?.topbar_text||"";
  $("siteHeroBadge").value=data?.hero_badge||"🔥 FLASH SALE"; $("siteHeroTitle").value=data?.hero_title||""; $("siteHeroSubtitle").value=data?.hero_subtitle||""; $("siteHeroButton").value=data?.hero_button||"অফার দেখুন";
- $("siteSellerTitle").value=data?.seller_title||""; $("siteSellerText").value=data?.seller_text||""; $("siteWhatsapp").value=data?.whatsapp_number||"01822024595"; $("siteEmail").value=data?.contact_email||"flowget.org@gmail.com"; $("siteFooterText").value=data?.footer_text||""; $("siteLogoUrl").value=data?.logo_url||"";
+ $("siteWhatsapp").value=data?.whatsapp_number||"01822024595"; $("siteEmail").value=data?.contact_email||"flowget.org@gmail.com"; $("siteFooterText").value=data?.footer_text||""; $("siteLogoUrl").value=data?.logo_url||"";
  if(data?.logo_url){$("siteLogoPreview").src=data.logo_url;$("siteLogoPreview").classList.remove("hidden")}
 }
 function previewSiteLogo(){const f=$("siteLogoFile")?.files?.[0]; if(!f)return; $("siteLogoName").textContent=`${f.name} (${Math.round(f.size/1024)} KB)`; const img=$("siteLogoPreview"); img.src=URL.createObjectURL(f); img.classList.remove("hidden");}
@@ -208,7 +207,7 @@ async function uploadSiteLogo(file){
 }
 async function saveSiteSettings(){
  const err=$("siteSetErr"),msg=$("siteSetMsg"); err.classList.add("hidden");
- const payload={brand_name:$("siteBrandName").value.trim()||"FlowGet",site_title:$("siteTitleText").value.trim()||"FlowGet",topbar_text:$("siteTopbar").value.trim(),hero_badge:$("siteHeroBadge").value.trim(),hero_title:$("siteHeroTitle").value.trim(),hero_subtitle:$("siteHeroSubtitle").value.trim(),hero_button:$("siteHeroButton").value.trim(),seller_title:$("siteSellerTitle").value.trim(),seller_text:$("siteSellerText").value.trim(),whatsapp_number:$("siteWhatsapp").value.trim(),contact_email:$("siteEmail").value.trim(),footer_text:$("siteFooterText").value.trim(),logo_url:$("siteLogoUrl").value.trim()||null,updated_at:new Date().toISOString()};
+ const payload={brand_name:$("siteBrandName").value.trim()||"FlowGet",site_title:$("siteTitleText").value.trim()||"FlowGet",topbar_text:$("siteTopbar").value.trim(),hero_badge:$("siteHeroBadge").value.trim(),hero_title:$("siteHeroTitle").value.trim(),hero_subtitle:$("siteHeroSubtitle").value.trim(),hero_button:$("siteHeroButton").value.trim(),whatsapp_number:$("siteWhatsapp").value.trim(),contact_email:$("siteEmail").value.trim(),footer_text:$("siteFooterText").value.trim(),logo_url:$("siteLogoUrl").value.trim()||null,updated_at:new Date().toISOString()};
  try{const f=$("siteLogoFile").files[0]; if(f)payload.logo_url=await uploadSiteLogo(f); const {error}=await sb.from("site_settings").update(payload).eq("id",1); if(error)throw error; $("siteLogoUrl").value=payload.logo_url||""; msg.textContent="✅ Site settings saved. Website reload করলে নতুন logo/text দেখা যাবে."; msg.classList.remove("hidden"); setTimeout(()=>msg.classList.add("hidden"),3500);}catch(e){err.textContent=e.message||"Save failed";err.classList.remove("hidden")}
 }
 async function loadPaymentSettings(){const {data,error}=await sb.from("payment_settings").select("bkash_number,nagad_number,rocket_number").eq("id",1).maybeSingle();if(error)return;$("adminBkash").value=data?.bkash_number||"";$("adminNagad").value=data?.nagad_number||"";$("adminRocket").value=data?.rocket_number||""}
@@ -242,7 +241,7 @@ async function login(){
 }
 async function logout(){await sb.auth.signOut();location.reload()}
 async function showApp(user){$("login").style.display="none";$("app").style.display="block";$("who").textContent=user?.email||"Admin";await refreshAll()}
-async function refreshAll(){await Promise.all([loadOrders(),loadProducts(),loadReviews(),loadCoupons(),loadSellers(),loadPaymentSettings()]);loadDashboard();if(!$("visitorsTab").classList.contains("hidden"))loadVisitors()}
+async function refreshAll(){await Promise.all([loadOrders(),loadProducts(),loadReviews(),loadCoupons(),loadPaymentSettings()]);loadDashboard();if(!$("visitorsTab").classList.contains("hidden"))loadVisitors()}
 async function loadOrders(){
  const {data,error}=await sb.from("orders").select("*").order("created_at",{ascending:false});
  if(error){$("orders").innerHTML=`<div class="order"><b>Order load failed</b><p class="muted">${esc(error.message)}</p></div>`;return}
@@ -454,8 +453,6 @@ async function createCoupon(){
 }
 async function toggleCoupon(id,active){const {error}=await sb.from("coupons").update({active}).eq("id",id);if(error)return alert(error.message);loadCoupons()}
 async function deleteCoupon(id){if(!confirm("Coupon delete করবেন?"))return;const {error}=await sb.from("coupons").delete().eq("id",id);if(error)return alert(error.message);loadCoupons()}
-async function loadSellers(){const box=$("sellers");if(!box)return;const st=$("sellerStatusFilter")?.value||"";let q=sb.from("seller_applications").select("*").order("created_at",{ascending:false});if(st)q=q.eq("status",st);const {data,error}=await q;if(error){box.innerHTML=`<div class="err">${esc(error.message)}</div>`;return}box.innerHTML=(data||[]).map(x=>`<div class="order"><div><h3>${esc(x.shop_name)}</h3><p class="muted">${esc(x.owner_name)} • ${esc(x.phone)} • ${esc(x.category||"")}</p><p>${esc(x.address)}</p><p>${esc(x.about||"")}</p>${x.store_link?`<a target="_blank" href="${esc(x.store_link)}">Store Link</a>`:""}<p><b>Status:</b> ${esc(x.status)}</p></div><div class="actions">${x.status!=="approved"?`<button class="btn primary" onclick="setSellerStatus('${x.id}','approved')">Approve</button>`:""}${x.status!=="rejected"?`<button class="btn danger" onclick="setSellerStatus('${x.id}','rejected')">Reject</button>`:""}</div></div>`).join("")||"<p>কোনো application নেই।</p>"}
-async function setSellerStatus(id,status){const {error}=await sb.from("seller_applications").update({status,reviewed_at:new Date().toISOString()}).eq("id",id);if(error)return alert(error.message);loadSellers()}
 sb.auth.getSession().then(({data})=>{if(data.session){showApp(data.session.user);loadPaymentSettings();}});
 </script>
 </body></html>

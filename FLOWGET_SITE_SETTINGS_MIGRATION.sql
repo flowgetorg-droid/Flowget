@@ -8,12 +8,11 @@ create table if not exists public.site_settings (
   hero_title text default 'প্রতিদিনের প্রয়োজনীয় পণ্য, এক জায়গায়',
   hero_subtitle text default 'বিশেষ অফার, দ্রুত ডেলিভারি ও সহজ COD checkout — FlowGet-এ।',
   hero_button text default 'অফার দেখুন',
-  seller_title text default '🏪 আপনার ব্যবসা অনলাইনে নিন',
-  seller_text text default 'FlowGet-এ seller হিসেবে আবেদন করুন এবং approved হলে product sell করুন।',
   whatsapp_number text default '01822024595',
   contact_email text default 'flowget.org@gmail.com',
   footer_text text default 'স্মার্ট পণ্য, সহজ কেনাকাটা।',
   logo_url text default 'assets/brand/flowget-logo.svg',
+  custom_texts jsonb not null default '{}'::jsonb,
   updated_at timestamptz not null default now()
 );
 insert into public.site_settings(id) values (1) on conflict(id) do nothing;
