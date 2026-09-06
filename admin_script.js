@@ -123,7 +123,7 @@ async function loadSiteSettings(){
  if(error){if(err){err.textContent="Site settings load failed: "+error.message;err.classList.remove("hidden")}return}
  siteSettingsAdmin=data||{};
  $("siteBrandName").value=data?.brand_name||"FlowGet"; $("siteTitleText").value=data?.site_title||"FlowGet"; $("siteTopbar").value=data?.topbar_text||"";
- $("siteHeroBadge").value=data?.hero_badge||"🔥 FLASH SALE"; $("siteHeroTitle").value=data?.hero_title||""; $("siteHeroSubtitle").value=data?.hero_subtitle||""; $("siteHeroButton").value=data?.hero_button||"অফার দেখুন"; if($("siteTextOverrides"))$("siteTextOverrides").value=JSON.stringify(data?.custom_texts||{},null,2);
+ $("siteHeroBadge").value=data?.hero_badge||"🔥 FLASH SALE"; $("siteHeroTitle").value=data?.hero_title||""; $("siteHeroSubtitle").value=data?.hero_subtitle||""; $("siteHeroButton").value=data?.hero_button||"অফার দেখুন";
  $("siteWhatsapp").value=data?.whatsapp_number||"01822024595"; $("siteEmail").value=data?.contact_email||"flowget.org@gmail.com"; $("siteFooterText").value=data?.footer_text||""; $("siteLogoUrl").value=data?.logo_url||"";
  if(data?.logo_url){$("siteLogoPreview").src=data.logo_url;$("siteLogoPreview").classList.remove("hidden")}
 }
@@ -134,7 +134,7 @@ async function uploadSiteLogo(file){
 }
 async function saveSiteSettings(){
  const err=$("siteSetErr"),msg=$("siteSetMsg"); err.classList.add("hidden");
- let customTexts={};try{customTexts=JSON.parse($("siteTextOverrides")?.value||"{}")}catch(e){err.textContent="Extra Website Text JSON invalid";err.classList.remove("hidden");return} const payload={custom_texts:customTexts,brand_name:$("siteBrandName").value.trim()||"FlowGet",site_title:$("siteTitleText").value.trim()||"FlowGet",topbar_text:$("siteTopbar").value.trim(),hero_badge:$("siteHeroBadge").value.trim(),hero_title:$("siteHeroTitle").value.trim(),hero_subtitle:$("siteHeroSubtitle").value.trim(),hero_button:$("siteHeroButton").value.trim(),whatsapp_number:$("siteWhatsapp").value.trim(),contact_email:$("siteEmail").value.trim(),footer_text:$("siteFooterText").value.trim(),logo_url:$("siteLogoUrl").value.trim()||null,updated_at:new Date().toISOString()};
+ const payload={brand_name:$("siteBrandName").value.trim()||"FlowGet",site_title:$("siteTitleText").value.trim()||"FlowGet",topbar_text:$("siteTopbar").value.trim(),hero_badge:$("siteHeroBadge").value.trim(),hero_title:$("siteHeroTitle").value.trim(),hero_subtitle:$("siteHeroSubtitle").value.trim(),hero_button:$("siteHeroButton").value.trim(),whatsapp_number:$("siteWhatsapp").value.trim(),contact_email:$("siteEmail").value.trim(),footer_text:$("siteFooterText").value.trim(),logo_url:$("siteLogoUrl").value.trim()||null,updated_at:new Date().toISOString()};
  try{const f=$("siteLogoFile").files[0]; if(f)payload.logo_url=await uploadSiteLogo(f); const {error}=await sb.from("site_settings").update(payload).eq("id",1); if(error)throw error; $("siteLogoUrl").value=payload.logo_url||""; msg.textContent="✅ Site settings saved. Website reload করলে নতুন logo/text দেখা যাবে."; msg.classList.remove("hidden"); setTimeout(()=>msg.classList.add("hidden"),3500);}catch(e){err.textContent=e.message||"Save failed";err.classList.remove("hidden")}
 }
 

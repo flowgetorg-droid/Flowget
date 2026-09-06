@@ -110,45 +110,5 @@ create index if not exists orders_order_id_idx on public.orders(order_id);
 alter table public.products add column if not exists brand text default '';
 create index if not exists products_brand_idx on public.products(brand);
 
--- 8) Become a Seller application system
-create table if not exists public.seller_applications (
-  id uuid primary key default gen_random_uuid(),
-  shop_name text not null,
-  owner_name text not null,
-  phone text not null,
-  email text,
-  category text,
-  store_link text,
-  address text not null,
-  about text,
-  status text not null default 'pending' check(status in ('pending','approved','rejected')),
-  created_at timestamptz not null default now(),
-  reviewed_at timestamptz
-);
-alter table public.seller_applications enable row level security;
-drop policy if exists "Public can submit seller application" on public.seller_applications;
-create policy "Public can submit seller application" on public.seller_applications for insert to anon, authenticated with check(status='pending');
-drop policy if exists "Admin can read seller applications" on public.seller_applications;
-create policy "Admin can read seller applications" on public.seller_applications for select to authenticated using(public.is_sparkcart_admin());
-drop policy if exists "Admin can update seller applications" on public.seller_applications;
-create policy "Admin can update seller applications" on public.seller_applications for update to authenticated using(public.is_sparkcart_admin()) with check(public.is_sparkcart_admin());
-create index if not exists seller_applications_status_idx on public.seller_applications(status);
-create index if not exists seller_applications_created_idx on public.seller_applications(created_at desc);
-
--- 9) Optional seller profile table for future seller dashboards.
-create table if not exists public.sellers (
-  id uuid primary key default gen_random_uuid(),
-  application_id uuid references public.seller_applications(id) on delete set null,
-  shop_name text not null,
-  owner_name text not null,
-  phone text not null,
-  email text,
-  status text not null default 'approved' check(status in ('approved','suspended')),
-  created_at timestamptz not null default now()
-);
-alter table public.sellers enable row level security;
-drop policy if exists "Admin can manage sellers" on public.sellers;
-create policy "Admin can manage sellers" on public.sellers for all to authenticated using(public.is_sparkcart_admin()) with check(public.is_sparkcart_admin());
-
--- NOTE: This upgrade adds the seller application workflow and brand filtering.
+-- NOTE: This upgrade adds the brand filtering.
 -- Real debit/credit card processing still requires a licensed payment gateway account/API; card numbers should never be stored in this database.

@@ -1,4 +1,4 @@
--- FlowGet: admin-controlled brand/logo/site text settings
+-- FlowGet: Site settings (safe for existing databases)
 create table if not exists public.site_settings (
   id integer primary key check (id=1),
   brand_name text not null default 'FlowGet',
@@ -12,10 +12,23 @@ create table if not exists public.site_settings (
   contact_email text default 'flowget.org@gmail.com',
   footer_text text default 'স্মার্ট পণ্য, সহজ কেনাকাটা।',
   logo_url text default 'assets/brand/flowget-logo.svg',
-  custom_texts jsonb not null default '{}'::jsonb,
   updated_at timestamptz not null default now()
 );
-insert into public.site_settings(id) values (1) on conflict(id) do nothing;
+alter table public.site_settings add column if not exists brand_name text not null default 'FlowGet';
+alter table public.site_settings add column if not exists site_title text not null default 'FlowGet';
+alter table public.site_settings add column if not exists topbar_text text default '';
+alter table public.site_settings add column if not exists hero_badge text default '🔥 FLASH SALE';
+alter table public.site_settings add column if not exists hero_title text default 'প্রতিদিনের প্রয়োজনীয় পণ্য, এক জায়গায়';
+alter table public.site_settings add column if not exists hero_subtitle text default 'বিশেষ অফার, দ্রুত ডেলিভারি ও সহজ COD checkout — FlowGet-এ।';
+alter table public.site_settings add column if not exists hero_button text default 'অফার দেখুন';
+alter table public.site_settings add column if not exists whatsapp_number text default '01822024595';
+alter table public.site_settings add column if not exists contact_email text default 'flowget.org@gmail.com';
+alter table public.site_settings add column if not exists footer_text text default 'স্মার্ট পণ্য, সহজ কেনাকাটা।';
+alter table public.site_settings add column if not exists logo_url text default 'assets/brand/flowget-logo.svg';
+alter table public.site_settings add column if not exists updated_at timestamptz not null default now();
+alter table public.site_settings drop column if exists seller_title;
+alter table public.site_settings drop column if exists seller_text;
+insert into public.site_settings(id,brand_name,site_title) values (1,'FlowGet','FlowGet') on conflict(id) do nothing;
 alter table public.site_settings enable row level security;
 drop policy if exists "Public can read site settings" on public.site_settings;
 create policy "Public can read site settings" on public.site_settings for select to anon, authenticated using (id=1);

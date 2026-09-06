@@ -1,0 +1,12 @@
+FLOWGET UPDATE — RUN IN THIS ORDER
+
+For an EXISTING Supabase database:
+1) Run FLOWGET_SELLER_REMOVAL_MIGRATION.sql
+2) Run FLOWGET_SITE_SETTINGS_MIGRATION.sql
+3) If homepage_banners table already exists, do NOT need to run HOMEPAGE_BANNERS_MIGRATION.sql again.
+4) Deploy the website files.
+
+If homepage_banners does NOT exist and you want editable homepage banners:
+- Run HOMEPAGE_BANNERS_MIGRATION.sql once, then run the two FlowGet migrations above.
+
+Important: The old broken migration that directly updated homepage_banners has been removed.
