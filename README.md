@@ -36,3 +36,15 @@ The SPA fallback is in `public/_redirects`, so Vite copies it into `dist/_redire
 - Configure Storage buckets/policies if uploads are required.
 - Create at least one `admin_users` row for the administrator.
 - Seed real products, categories, pages and banners before launch.
+
+## Latest navigation/location fixes
+- Admin tab changes use history-only URL updates (`?tab=`), so switching Dashboard/Products/Categories/Orders/Coupons/Banners/Settings does not perform a browser navigation or full page reload.
+- Checkout location picker now uses a primary Bangladesh geo API with a nested-JSON fallback and caches successful data locally. Division → District → Upazila/Thana are dependent selectors.
+
+## Latest fixes
+- Admin tab navigation is now history-only (`?tab=`), so Dashboard/Products/Categories/Orders/Coupons/Banners/Settings switching does not perform a browser navigation or full page reload, and browser Back/Forward keeps the selected tab.
+- Checkout location picker now tries a primary Bangladesh geo API and then the existing nested geo JSON fallback, with local caching. Division → District → Upazila/Thana remain dependent selectors.
+
+
+### Latest fix
+- Removed the fragile `categories(name)` PostgREST relationship from product queries. Product/Admin pages now read `category_id` directly, avoiding schema-cache/relationship errors when the existing Supabase database does not expose the category relationship.

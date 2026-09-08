@@ -31,7 +31,8 @@ async function uploadMedia(file,folder,bucket='product-media'){
 class AdminTabBoundary extends React.Component{constructor(p){super(p);this.state={error:null}}static getDerivedStateFromError(error){return{error}}componentDidCatch(error){console.error('Admin tab error:',error)}render(){if(this.state.error)return <div className="card"><h2>Admin section error</h2><p className="muted">এই section load করতে সমস্যা হয়েছে। অন্য tab ব্যবহার করুন বা page refresh করুন.</p><pre className="errorpre">{String(this.state.error?.message||this.state.error)}</pre><button className="btn" onClick={()=>this.setState({error:null})}>Try again</button></div>;return this.props.children}}
 
 export default function Admin(){
-  const[user,setUser]=useState(null),[admin,setAdmin]=useState(false),[authReady,setAuthReady]=useState(false),[adminChecking,setAdminChecking]=useState(false),[tab,setTab]=useState('dashboard'),[err,setErr]=useState(''),[menu,setMenu]=useState(false);
+  const initialTab=(()=>{try{const t=new URLSearchParams(location.search).get('tab');return TABS.includes(t)?t:'dashboard'}catch{return'dashboard'}})();
+  const[user,setUser]=useState(null),[admin,setAdmin]=useState(false),[authReady,setAuthReady]=useState(false),[adminChecking,setAdminChecking]=useState(false),[tab,setTab]=useState(initialTab),[err,setErr]=useState(''),[menu,setMenu]=useState(false);
   useEffect(()=>{
     if(!supabase){setAuthReady(true);return;}
     let alive=true;
@@ -51,6 +52,7 @@ export default function Admin(){
     const{data:sub}=supabase.auth.onAuthStateChange((_e,s)=>{verify(s)});
     return()=>{alive=false;sub.subscription.unsubscribe()};
   },[]);
+  useEffect(()=>{const onPop=()=>{const t=new URLSearchParams(location.search).get('tab');setTab(TABS.includes(t)?t:'dashboard')};addEventListener('popstate',onPop);return()=>removeEventListener('popstate',onPop)},[]);
   if(!supabase)return <div className="container"><div className="card"><h1>Admin Setup</h1><p>Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your environment.</p></div></div>;
   if(!authReady||adminChecking)return <div className="container"><div className="card adminloading"><div className="spinner"/><h2>Loading Admin…</h2><p className="muted">Checking secure admin session.</p></div></div>;
   if(!user)return <AdminLogin/>;
@@ -58,7 +60,7 @@ export default function Admin(){
   return <div className="adminwrap">
     <aside className={`adminnav ${menu?'open':''}`}>
       <div className="adminnavtop"><h2>FlowGet Admin</h2><button className="adminmenubtn" onClick={()=>setMenu(!menu)} aria-label="Toggle admin menu">{menu?<X/>:<Menu/>}</button></div>
-      <div className="adminnavlinks">{TABS.map(x=><button className={tab===x?'active':''} onClick={()=>{setErr('');setTab(x);setMenu(false)}} key={x}>{x[0].toUpperCase()+x.slice(1)}</button>)}<button onClick={()=>supabase.auth.signOut()}>Logout</button></div>
+      <div className="adminnavlinks">{TABS.map(x=><button type="button" className={tab===x?'active':''} onClick={()=>{setErr('');setTab(x);setMenu(false);const u=new URL(location.href);u.searchParams.set('tab',x);history.pushState({},'',u.pathname+'?'+u.searchParams.toString())}} key={x}>{x[0].toUpperCase()+x.slice(1)}</button>)}<button type="button" onClick={()=>supabase.auth.signOut()}>Logout</button></div>
     </aside>
     <section className="adminmain"><div className="adminhead"><h1>{tab[0].toUpperCase()+tab.slice(1)}</h1>{err&&<div className="notice" role="alert">{err}</div>}</div><AdminTabBoundary>{tab==='dashboard'?<Dashboard/>:tab==='settings'?<Settings/>:tab==='products'?<Products setErr={setErr}/>:tab==='categories'?<Categories setErr={setErr}/>:tab==='orders'?<Orders setErr={setErr}/>:tab==='coupons'?<Coupons setErr={setErr}/>:<Banners setErr={setErr}/>}</AdminTabBoundary></section>
   </div>
@@ -125,7 +127,7 @@ function Products({setErr}){
     <div className="field"><label>Category</label><select value={form.category_id} onChange={e=>setForm(f=>({...f,category_id:e.target.value}))}><option value="">No category</option>{cats.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
     <div className="two"><Text f="price" type="number" v={form.price} set={v=>setForm(f=>({...f,price:v}))}/><Text f="discount_price" type="number" v={form.discount_price} set={v=>setForm(f=>({...f,discount_price:v}))}/></div><Text f="stock" type="number" v={form.stock} set={v=>setForm(f=>({...f,stock:v}))}/>
     <div className="uploadgrid productuploads">
-      <div className="uploadbox"><label className="uploadlabel"><ImageIcon size={18}/> <span>Main product image</span><input type="file" accept="image/*" capture="environment" onChange={handleImage}/></label><button type="button" className="mobileuploadbtn" onClick={e=>e.currentTarget.previousElementSibling.querySelector('input').click()}>📷 {editing?'Replace main image':'Choose main image'}</button><small>JPG, PNG, WebP, GIF · max 8MB</small>{form.main_image&&<img className="uploadpreview" src={form.main_image} alt="Product preview"/>}</div>
+      <div className="uploadbox"><label className="uploadlabel"><ImageIcon size={18}/> <span>Main product image</span><input type="file" accept="image/*" onChange={handleImage}/></label><button type="button" className="mobileuploadbtn" onClick={e=>e.currentTarget.previousElementSibling.querySelector('input').click()}>🖼️ {editing?'Replace main image':'Choose main image'}</button><small>JPG, PNG, WebP, GIF · max 8MB</small>{form.main_image&&<img className="uploadpreview" src={form.main_image} alt="Product preview"/>}</div>
       <div className="uploadbox"><label className="uploadlabel"><ImageIcon size={18}/> <span>Gallery images</span><input type="file" accept="image/*" multiple onChange={e=>handleImage(e,true)}/></label><button type="button" className="mobileuploadbtn" onClick={e=>e.currentTarget.previousElementSibling.querySelector('input').click()}>🖼️ Choose gallery photos</button><small>Mobile-eo multiple photo select/upload kora jabe · max 8MB each</small>{(existingGallery.length>0||galleryUrls.length>0)&&<div className="gallerypreviews">{existingGallery.map((g,i)=><div className="gallerythumb" key={g.id||g.url+i}><img src={g.url} alt={`Gallery ${i+1}`}/><button type="button" onClick={()=>removeGallery(g.url)} aria-label="Remove gallery image">×</button></div>)}{galleryUrls.map((u,i)=><div className="gallerythumb" key={u+i}><img src={u} alt={`New gallery ${i+1}`}/></div>)}</div>}</div>
       <div className="uploadbox"><label className="uploadlabel"><Video size={18}/> <span>Product video</span><input type="file" accept="video/mp4,video/webm,video/quicktime" onChange={handleVideo}/></label><button type="button" className="mobileuploadbtn" onClick={e=>e.currentTarget.previousElementSibling.querySelector('input').click()}>🎥 Choose video</button><small>MP4/WebM/MOV · max 50MB</small></div>
     </div>
