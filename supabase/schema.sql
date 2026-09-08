@@ -1148,6 +1148,47 @@ values(
 )
 on conflict(id) do nothing;
 
+
+-- =========================================================
+-- 9. VISITOR ANALYTICS
+-- =========================================================
+
+alter table if exists public.visitor_sessions
+  add column if not exists last_seen_at timestamptz default now();
+
+create index if not exists visitor_sessions_last_seen_idx
+  on public.visitor_sessions(last_seen_at);
+
+create or replace function public.track_visitor_session(
+  p_session_id text,
+  p_path text,
+  p_device_type text default null,
+  p_referrer text default null
+)
+returns void
+language plpgsql
+security definer
+set search_path = public, pg_temp
+as $$
+begin
+  if p_session_id is null or length(trim(p_session_id)) < 8 then
+    raise exception 'Invalid visitor session';
+  end if;
+
+  insert into public.visitor_sessions(id,started_at,last_seen_at,device_type,referrer,last_path)
+  values(p_session_id,now(),now(),left(p_device_type,20),left(p_referrer,500),left(coalesce(p_path,'/'),500))
+  on conflict(id) do update set
+    last_seen_at=now(),
+    ended_at=null,
+    device_type=coalesce(excluded.device_type,public.visitor_sessions.device_type),
+    referrer=coalesce(public.visitor_sessions.referrer,excluded.referrer),
+    last_path=excluded.last_path;
+end
+$$;
+
+revoke all on function public.track_visitor_session(text,text,text,text) from public;
+grant execute on function public.track_visitor_session(text,text,text,text) to anon, authenticated;
+
 -- =========================================================
 -- DONE
 -- =========================================================
