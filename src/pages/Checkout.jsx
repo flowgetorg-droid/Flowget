@@ -1,7 +1,7 @@
 import React,{useEffect,useMemo,useState}from'react';
 import{getCart,clearCart}from'../lib/cart';
 import{getSettings,placeOrder}from'../lib/store';
-import{getBangladeshLocations}from'../data/bangladesh';
+import{getBangladeshLocations,getLocationFallback}from'../data/bangladesh';
 import{useNavigate}from'../components/Layout';
 
 export default function Checkout(){
@@ -16,7 +16,7 @@ export default function Checkout(){
 
  useEffect(()=>{getSettings().then(setS).catch(()=>{})},[]);
  useEffect(()=>{const sync=()=>setC(getCart());window.addEventListener('flowget-cart-updated',sync);return()=>window.removeEventListener('flowget-cart-updated',sync)},[]);
- useEffect(()=>{let alive=true;setLocLoading(true);getBangladeshLocations().then(x=>{if(alive)setLocations(x)}).catch(e=>{if(alive)setLocErr(e?.message||'ঠিকানার তালিকা লোড করা যায়নি।')}).finally(()=>alive&&setLocLoading(false));return()=>{alive=false}},[]);
+ useEffect(()=>{let alive=true;setLocLoading(true);getBangladeshLocations().then(x=>{if(alive)setLocations(x)}).catch(e=>{if(alive){setLocations(getLocationFallback());setLocErr('ঠিকানার তালিকা সাময়িকভাবে লোড হয়নি। পেজ রিফ্রেশ করে আবার চেষ্টা করুন।')}}).finally(()=>alive&&setLocLoading(false));return()=>{alive=false}},[]);
 
  const division=locations.find(x=>x.bn_name===f.division||x.name===f.division);
  const districts=division?.districts||[];
@@ -52,10 +52,10 @@ export default function Checkout(){
      <div className="field"><label>মোবাইল নম্বর</label><input required inputMode="tel" placeholder="01XXXXXXXXX" value={f.phone} onChange={e=>setField('phone',e.target.value)}/></div>
     </div>
     <div className="two">
-     <div className="field"><label>বিভাগ</label><select required value={f.division} onChange={onDivision} disabled={locLoading}><option value="">{locLoading?'তালিকা লোড হচ্ছে...':'বিভাগ নির্বাচন করুন'}</option>{locations.map(x=><option key={x.name} value={x.bn_name}>{x.bn_name}</option>)}</select></div>
-     <div className="field"><label>জেলা</label><select required value={f.district} onChange={onDistrict} disabled={!division||locLoading}><option value="">জেলা নির্বাচন করুন</option>{districts.map(x=><option key={x.name} value={x.bn_name}>{x.bn_name}</option>)}</select></div>
+     <div className="field"><label>বিভাগ <span className="requiredMark">*</span></label><select className="locationSelect" required value={f.division} onChange={onDivision} disabled={locLoading}><option value="">{locLoading?'তালিকা লোড হচ্ছে...':'বিভাগ নির্বাচন করুন'}</option>{locations.map(x=><option key={x.name} value={x.bn_name}>{x.bn_name}</option>)}</select></div>
+     <div className="field"><label>জেলা <span className="requiredMark">*</span></label><select className="locationSelect" required value={f.district} onChange={onDistrict} disabled={!division||locLoading}><option value="">জেলা নির্বাচন করুন</option>{districts.map(x=><option key={x.name} value={x.bn_name}>{x.bn_name}</option>)}</select></div>
     </div>
-    <div className="field"><label>উপজেলা / থানা</label><select required value={f.area} onChange={e=>setField('area',e.target.value)} disabled={!district||locLoading}><option value="">উপজেলা / থানা নির্বাচন করুন</option>{upazilas.map(x=><option key={x.name} value={x.bn_name}>{x.bn_name}</option>)}</select></div>
+    <div className="field"><label>উপজেলা / থানা <span className="requiredMark">*</span></label><select className="locationSelect" required value={f.area} onChange={e=>setField('area',e.target.value)} disabled={!district||locLoading}><option value="">উপজেলা / থানা নির্বাচন করুন</option>{upazilas.map(x=><option key={x.name} value={x.bn_name}>{x.bn_name}</option>)}</select></div>
     {locErr&&<div className="notice" role="alert">{locErr} পেজ রিফ্রেশ করে আবার চেষ্টা করুন।</div>}
     <div className="field"><label>বিস্তারিত ঠিকানা</label><textarea required rows="3" value={f.address} onChange={e=>setField('address',e.target.value)} placeholder="বাড়ি/রোড/এলাকার বিস্তারিত ঠিকানা লিখুন"/></div>
     <div className="field"><label>কুপন কোড (যদি থাকে)</label><input value={f.coupon} onChange={e=>setField('coupon',e.target.value.toUpperCase())} placeholder="কুপন কোড লিখুন"/></div>
