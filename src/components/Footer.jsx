@@ -12,26 +12,26 @@ export default function Footer({ settings }) {
         <div className="footergrid">
           <div>
             <div className="logo footerlogo"><span>F</span>{settings.store_name}</div>
-            <p>{settings.footer_about || 'Smart products, reliable service and easy shopping for customers across Bangladesh.'}</p>
+            <p>{settings.footer_about || 'মানসম্মত পণ্য, নির্ভরযোগ্য সেবা এবং সারা বাংলাদেশে সহজ অনলাইন শপিং।'}</p>
           </div>
           <div>
-            <h4>Shop</h4>
-            <Link to="/shop">All Products</Link>
-            <Link to="/shop?sort=newest">New Arrivals</Link>
-            <Link to="/shop?sort=popular">Popular</Link>
+            <h4>কেনাকাটা</h4>
+            <Link to="/shop">সব পণ্য</Link>
+            <Link to="/shop?sort=newest">নতুন পণ্য</Link>
+            <Link to="/shop?sort=popular">জনপ্রিয়</Link>
           </div>
           <div>
-            <h4>Customer Care</h4>
-            <Link to="/track-order">Track Order</Link>
-            <Link to="/about">About Us</Link>
+            <h4>কাস্টমার কেয়ার</h4>
+            <Link to="/track-order">অর্ডার ট্র্যাক</Link>
+            <Link to="/about">আমাদের সম্পর্কে</Link>
             <Link to="/faq">FAQ</Link>
-            <Link to="/return-refund-policy">Returns & Refunds</Link>
-            <Link to="/delivery-information">Delivery</Link>
+            <Link to="/return-refund-policy">রিটার্ন ও রিফান্ড</Link>
+            <Link to="/delivery-information">ডেলিভারি</Link>
           </div>
           <div>
-            <h4>Contact</h4>
+            <h4>যোগাযোগ</h4>
             <a className="contactlink" href={`https://wa.me/${WHATSAPP}`} target="_blank" rel="noopener noreferrer">
-              <MessageCircle size={16} /> WhatsApp
+              <MessageCircle size={16} /> হোয়াটসঅ্যাপ
             </a>
             <a className="contactlink" href={`mailto:${EMAIL}`}>
               <Mail size={16} /> {EMAIL}
@@ -41,24 +41,24 @@ export default function Footer({ settings }) {
             </a>
           </div>
           <div>
-            <h4>Legal</h4>
-            <Link to="/privacy-policy">Privacy Policy</Link>
-            <Link to="/terms-conditions">Terms & Conditions</Link>
-            <Link to="/contact">Contact</Link>
+            <h4>নীতিমালা</h4>
+            <Link to="/privacy-policy">প্রাইভেসি পলিসি</Link>
+            <Link to="/terms-conditions">শর্তাবলি</Link>
+            <Link to="/contact">যোগাযোগ</Link>
           </div>
         </div>
-        <div className="copyright">© {new Date().getFullYear()} {settings.store_name}. All rights reserved.</div>
+        <div className="copyright">© {new Date().getFullYear()} {settings.store_name}. সর্বস্বত্ব সংরক্ষিত</div>
       </footer>
       <a
         className="whatsappFloat"
         href={`https://wa.me/${WHATSAPP}`}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat with FlowGet on WhatsApp"
-        title="Chat on WhatsApp"
+        aria-label="Chat with FlowGet on হোয়াটসঅ্যাপ"
+        title="Chat on হোয়াটসঅ্যাপ"
       >
         <MessageCircle size={24} />
-        <span>WhatsApp</span>
+        <span>হোয়াটসঅ্যাপ</span>
       </a>
     </>
   );
