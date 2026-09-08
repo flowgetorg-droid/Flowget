@@ -48,3 +48,14 @@ The SPA fallback is in `public/_redirects`, so Vite copies it into `dist/_redire
 
 ### Latest fix
 - Removed the fragile `categories(name)` PostgREST relationship from product queries. Product/Admin pages now read `category_id` directly, avoiding schema-cache/relationship errors when the existing Supabase database does not expose the category relationship.
+
+## Latest admin product edit fix
+The admin product loader no longer requests a PostgREST embedded `product_images` relationship from `products`. Products are loaded first and gallery rows are fetched separately from `product_images`, avoiding schema-cache errors when the foreign-key relationship is not exposed in PostgREST. Product detail loading uses the same safe approach.
+
+## Final hardening included (2026-09-08)
+- Customer Order ID is automatically saved in the browser after successful checkout; Track Order lists saved IDs and lets the customer remove them.
+- Admin tab selection and Product Edit draft are persisted in browser storage so navigation and refresh do not silently reset the editing state.
+- Product editor has separate Description and Specifications fields.
+- Product landing page renders Description and Specifications as separate responsive sections.
+- Product gallery is loaded through a separate `product_images` query, avoiding Supabase relationship/schema-cache dependency.
+- Schema migration contains additive compatibility fields and safe legacy-value copying. It does not drop tables/columns or truncate/delete existing business data.

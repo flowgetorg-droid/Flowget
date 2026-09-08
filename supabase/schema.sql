@@ -59,6 +59,7 @@ create table if not exists public.products (
   effective_price numeric generated always as (coalesce(discount_price, price)) stored,
   stock int not null default 0 check(stock >= 0),
   main_image text,
+  video_url text,
   rating numeric default 0,
   review_count int default 0,
   featured boolean default false,
@@ -279,6 +280,28 @@ alter table public.products add column if not exists seo_title text;
 alter table public.products add column if not exists meta_description text;
 alter table public.products add column if not exists created_at timestamptz default now();
 alter table public.products add column if not exists updated_at timestamptz default now();
+alter table public.products add column if not exists video_url text;
+
+-- Preserve legacy category values when an older products.category text column exists.
+do $$
+begin
+  if exists (
+    select 1 from pg_attribute
+    where attrelid='public.products'::regclass
+      and attname='category'
+      and not attisdropped
+  ) then
+    execute $legacy$
+      update public.products p
+      set category_id=c.id
+      from public.categories c
+      where p.category_id is null
+        and p.category is not null
+        and (lower(c.name)=lower(p.category) or lower(c.slug)=lower(p.category))
+    $legacy$;
+  end if;
+exception when undefined_column then null;
+end $$;
 
 do $$
 begin
@@ -334,6 +357,86 @@ alter table public.coupons add column if not exists start_at timestamptz;
 alter table public.coupons add column if not exists expires_at timestamptz;
 alter table public.coupons add column if not exists active boolean default true;
 alter table public.coupons add column if not exists created_at timestamptz default now();
+
+-- Compatibility columns for older FlowGet databases. These additions do not delete or overwrite existing order data.
+alter table public.orders add column if not exists customer_phone text;
+alter table public.orders add column if not exists email text;
+alter table public.orders add column if not exists address text;
+alter table public.orders add column if not exists full_address text;
+alter table public.orders add column if not exists upazila text;
+alter table public.orders add column if not exists notes text;
+alter table public.orders add column if not exists total_amount numeric;
+alter table public.orders add column if not exists payment_status text;
+alter table public.orders add column if not exists transaction_id text;
+alter table public.orders add column if not exists order_id text;
+alter table public.orders add column if not exists customer_id uuid;
+alter table public.orders add column if not exists customer_name text;
+alter table public.orders add column if not exists phone text;
+alter table public.orders add column if not exists division text;
+alter table public.orders add column if not exists district text;
+alter table public.orders add column if not exists area text;
+alter table public.orders add column if not exists subtotal numeric;
+alter table public.orders add column if not exists discount numeric default 0;
+alter table public.orders add column if not exists coupon_code text;
+alter table public.orders add column if not exists delivery_charge numeric;
+alter table public.orders add column if not exists payment_method text;
+alter table public.orders add column if not exists total numeric;
+alter table public.orders add column if not exists status text default 'Pending';
+alter table public.orders add column if not exists created_at timestamptz default now();
+alter table public.orders add column if not exists updated_at timestamptz default now();
+
+
+-- Copy legacy order fields into the current canonical fields only when the current field is empty.
+update public.orders
+set phone=coalesce(nullif(phone,''),nullif(customer_phone,'')),
+    address=coalesce(nullif(address,''),nullif(full_address,'')),
+    area=coalesce(nullif(area,''),nullif(upazila,'')),
+    note=coalesce(nullif(note,''),nullif(notes,'')),
+    total=coalesce(total,total_amount)
+where (phone is null or phone='')
+   or (address is null or address='')
+   or (area is null or area='')
+   or (note is null or note='')
+   or total is null;
+
+-- Normalize legacy order status values without touching order rows other than the status text itself.
+do $$
+begin
+  for r in
+    select conname
+    from pg_constraint
+    where conrelid='public.orders'::regclass
+      and contype='c'
+      and pg_get_constraintdef(oid) ilike '%status%'
+  loop
+    execute format('alter table public.orders drop constraint %I',r.conname);
+  end loop;
+exception when undefined_table then null;
+end $$;
+
+update public.orders
+set status=case lower(trim(coalesce(status,'')))
+  when 'pending' then 'Pending'
+  when 'confirmed' then 'Confirmed'
+  when 'processing' then 'Processing'
+  when 'shipped' then 'Shipped'
+  when 'delivered' then 'Delivered'
+  when 'cancelled' then 'Cancelled'
+  when 'canceled' then 'Cancelled'
+  else 'Pending'
+end;
+
+do $$
+begin
+  if not exists (
+    select 1 from pg_constraint
+    where conname='orders_status_check_flowget'
+      and conrelid='public.orders'::regclass
+  ) then
+    alter table public.orders add constraint orders_status_check_flowget
+      check(status in ('Pending','Confirmed','Processing','Shipped','Delivered','Cancelled'));
+  end if;
+end $$;
 
 -- =========================================================
 -- 3. CONSTRAINTS / INDEXES

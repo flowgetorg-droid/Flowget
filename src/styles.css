@@ -63,3 +63,5 @@
   .adminnavlinks button{min-height:44px!important;padding:11px 12px!important;font-size:15px!important}
   .adminmain{width:100%!important;max-width:100%!important;box-sizing:border-box!important;padding:12px!important;overflow-x:hidden!important}
 }
+
+.productinfo{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:28px}.productinfo-card{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:24px}.productinfo-card h2{margin:0 0 16px}.productdescription{line-height:1.8;white-space:pre-wrap}.savedorders{max-width:600px;margin-bottom:18px}.savedorderrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-top:1px solid #eee}.savedorderid{border:0;background:none;font-weight:700;cursor:pointer;text-align:left}.savedorderrow .secondarybtn{border:0;background:transparent;cursor:pointer}@media(max-width:800px){.productinfo{grid-template-columns:1fr}.productinfo-card{padding:18px}}

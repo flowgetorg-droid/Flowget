@@ -31,7 +31,7 @@ async function uploadMedia(file,folder,bucket='product-media'){
 class AdminTabBoundary extends React.Component{constructor(p){super(p);this.state={error:null}}static getDerivedStateFromError(error){return{error}}componentDidCatch(error){console.error('Admin tab error:',error)}render(){if(this.state.error)return <div className="card"><h2>Admin section error</h2><p className="muted">এই section load করতে সমস্যা হয়েছে। অন্য tab ব্যবহার করুন বা page refresh করুন.</p><pre className="errorpre">{String(this.state.error?.message||this.state.error)}</pre><button className="btn" onClick={()=>this.setState({error:null})}>Try again</button></div>;return this.props.children}}
 
 export default function Admin(){
-  const initialTab=(()=>{try{const t=new URLSearchParams(location.search).get('tab');return TABS.includes(t)?t:'dashboard'}catch{return'dashboard'}})();
+  const initialTab=(()=>{try{const t=new URLSearchParams(location.search).get('tab');if(TABS.includes(t))return t;const saved=localStorage.getItem('flowget-admin-tab-v2');return TABS.includes(saved)?saved:'dashboard'}catch{return'dashboard'}})();
   const[user,setUser]=useState(null),[admin,setAdmin]=useState(false),[authReady,setAuthReady]=useState(false),[adminChecking,setAdminChecking]=useState(false),[tab,setTab]=useState(initialTab),[err,setErr]=useState(''),[menu,setMenu]=useState(false);
   useEffect(()=>{
     if(!supabase){setAuthReady(true);return;}
@@ -53,6 +53,7 @@ export default function Admin(){
     return()=>{alive=false;sub.subscription.unsubscribe()};
   },[]);
   useEffect(()=>{const onPop=()=>{const t=new URLSearchParams(location.search).get('tab');setTab(TABS.includes(t)?t:'dashboard')};addEventListener('popstate',onPop);return()=>removeEventListener('popstate',onPop)},[]);
+  useEffect(()=>{try{localStorage.setItem('flowget-admin-tab-v2',tab)}catch{}},[tab]);
   if(!supabase)return <div className="container"><div className="card"><h1>Admin Setup</h1><p>Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your environment.</p></div></div>;
   if(!authReady||adminChecking)return <div className="container"><div className="card adminloading"><div className="spinner"/><h2>Loading Admin…</h2><p className="muted">Checking secure admin session.</p></div></div>;
   if(!user)return <AdminLogin/>;
@@ -92,7 +93,27 @@ function Dashboard(){
 function Products({setErr}){
   const[data,setData]=useState([]),[cats,setCats]=useState([]),[editing,setEditing]=useState(null),[form,setForm]=useState(emptyProduct),[saving,setSaving]=useState(false),[uploading,setUploading]=useState(false),[galleryUrls,setGalleryUrls]=useState([]),[existingGallery,setExistingGallery]=useState([]),[specs,setSpecs]=useState([]);
   const load=()=>Promise.all([getProducts({}),getCategories()]).then(([p,c])=>{setData(p);setCats(c)}).catch(e=>setErr(e.message));
-  useEffect(()=>{load()},[]);
+  useEffect(()=>{
+    load();
+    try{
+      const raw=localStorage.getItem('flowget-admin-product-edit-v2');
+      if(raw){
+        const draft=JSON.parse(raw);
+        if(draft?.id){
+          setEditing(draft.id);
+          setForm({...emptyProduct,...(draft.form||{}),category_id:draft.form?.category_id||'',price:draft.form?.price??'',discount_price:draft.form?.discount_price??'',stock:draft.form?.stock??0,video_url:draft.form?.video_url||''});
+          setSpecs(Array.isArray(draft.specs)?draft.specs:[]);
+          setGalleryUrls(Array.isArray(draft.galleryUrls)?draft.galleryUrls:[]);
+          setExistingGallery(Array.isArray(draft.existingGallery)?draft.existingGallery:[]);
+        }
+      }
+    }catch{}
+  },[]);
+  useEffect(()=>{
+    if(!editing)return;
+    try{localStorage.setItem('flowget-admin-product-edit-v2',JSON.stringify({id:editing,form,specs,galleryUrls,existingGallery}))}catch{}
+  },[editing,form,specs,galleryUrls,existingGallery]);
+  const clearProductDraft=()=>{try{localStorage.removeItem('flowget-admin-product-edit-v2')}catch{}};
   const save=async e=>{e.preventDefault();setErr('');setSaving(true);try{
     const cleanSpecs=Object.fromEntries(specs.filter(x=>x.name.trim()).map(x=>[x.name.trim(),x.value.trim()]));
     const payload={...form,price:Number(form.price),discount_price:form.discount_price===''?null:Number(form.discount_price),stock:Number(form.stock),category_id:form.category_id||null,sku:form.sku||null,video_url:form.video_url||null,specifications:cleanSpecs};
@@ -100,7 +121,7 @@ function Products({setErr}){
     if(r.error)throw r.error;
     const productId=editing||r.data?.id;
     if(galleryUrls.length&&productId){const{error}=await supabase.from('product_images').insert(galleryUrls.map((url,i)=>({product_id:productId,url,sort_order:existingGallery.length+i+10})));if(error)throw error}
-    setEditing(null);setForm(emptyProduct);setGalleryUrls([]);setExistingGallery([]);setSpecs([]);await load();
+    clearProductDraft();setEditing(null);setForm(emptyProduct);setGalleryUrls([]);setExistingGallery([]);setSpecs([]);await load();
   }catch(e){setErr(e.message)}finally{setSaving(false)}};
   const edit=p=>{
     setEditing(p.id);setForm({...emptyProduct,...p,category_id:p.category_id||'',price:p.price??'',discount_price:p.discount_price??'',stock:p.stock??0,video_url:p.video_url||''});
@@ -121,7 +142,7 @@ function Products({setErr}){
   }catch(e){setErr(e.message)}finally{setUploading(false);e.target.value=''}};
   const removeGallery=async(url)=>{if(!editing)return;setErr('');try{const{error}=await supabase.from('product_images').delete().eq('product_id',editing).eq('url',url);if(error)throw error;setExistingGallery(g=>g.filter(x=>x.url!==url))}catch(e){setErr(e.message)}};
   const handleVideo=async e=>{const file=e.target.files?.[0];if(!file)return;setUploading(true);setErr('');try{if(!file.type.startsWith('video/'))throw new Error('Please choose a video file.');if(file.size>50*1024*1024)throw new Error('Video must be 50MB or smaller.');const url=await uploadMedia(file,'videos');setForm(f=>({...f,video_url:url}));if(editing){const{error}=await supabase.from('products').update({video_url:url}).eq('id',editing);if(error)throw error}}catch(e){setErr(e.message)}finally{setUploading(false);e.target.value=''}};
-  const reset=()=>{setEditing(null);setForm(emptyProduct);setGalleryUrls([]);setExistingGallery([]);setSpecs([])};
+  const reset=()=>{clearProductDraft();setEditing(null);setForm(emptyProduct);setGalleryUrls([]);setExistingGallery([]);setSpecs([])};
   return <><Editor title={editing?'Edit Product':'Add Product'} onSubmit={save} onCancel={reset} saving={saving} fields={<>
     <Text f="name" v={form.name} set={v=>setForm(f=>({...f,name:v}))}/><Text f="slug" v={form.slug} set={v=>setForm(f=>({...f,slug:v}))}/><Text f="sku" v={form.sku||''} set={v=>setForm(f=>({...f,sku:v}))}/><Text f="brand" v={form.brand||''} set={v=>setForm(f=>({...f,brand:v}))}/>
     <div className="field"><label>Category</label><select value={form.category_id} onChange={e=>setForm(f=>({...f,category_id:e.target.value}))}><option value="">No category</option>{cats.map(c=><option key={c.id} value={c.id}>{c.name}</option>)}</select></div>
