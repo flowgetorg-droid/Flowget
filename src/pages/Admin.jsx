@@ -160,17 +160,10 @@ function Products({setErr}){
       if(!confirm(`Delete ${p.name}?`)) return;
       setErr('');
       try{
-        const {count,error:countError}=await supabase.from('order_items').select('id',{count:'exact',head:true}).eq('product_id',p.id);
-        if(countError) throw countError;
-        if((count||0)>0){
-          const {error}=await supabase.from('products').update({active:false}).eq('id',p.id);
-          if(error) throw error;
-          setErr(`This product is used in ${count} order item(s), so it was archived instead of deleted. Order history is preserved.`);
-        }else{
-          const {error:imageError}=await supabase.from('product_images').delete().eq('product_id',p.id);
-          if(imageError) throw imageError;
-          const {error}=await supabase.from('products').delete().eq('id',p.id);
-          if(error) throw error;
+        const {data:result,error}=await supabase.rpc('admin_delete_product_safe',{p_product_id:p.id});
+        if(error) throw error;
+        if(result?.archived){
+          setErr(`This product is used in ${result.order_item_count||0} order item(s), so it was archived instead of deleted. Order history is preserved.`);
         }
         clearProductDraft();
         setEditing(null);
