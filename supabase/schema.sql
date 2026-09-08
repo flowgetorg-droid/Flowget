@@ -1247,3 +1247,8 @@ drop policy if exists "admin banner media delete" on storage.objects;
 create policy "admin banner media delete"
 on storage.objects for delete to authenticated
 using (bucket_id='banner-media' and public.is_admin());
+
+-- =========================================================
+-- 9. PRODUCT MEDIA + DEMO CATALOG MIGRATION
+-- =========================================================
+-- See FlowGet_Product_Catalog_And_Image_Fix.sql for the same safe migration/seed script.
