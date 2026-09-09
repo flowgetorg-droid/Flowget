@@ -92,7 +92,7 @@ function Dashboard(){
 }
 function Products({setErr}){
   const[data,setData]=useState([]),[cats,setCats]=useState([]),[editing,setEditing]=useState(null),[form,setForm]=useState(emptyProduct),[saving,setSaving]=useState(false),[uploading,setUploading]=useState(false),[galleryUrls,setGalleryUrls]=useState([]),[existingGallery,setExistingGallery]=useState([]),[specs,setSpecs]=useState([]);
-  const load=()=>Promise.all([getProducts({}),getCategories()]).then(([p,c])=>{setData(p);setCats(c)}).catch(e=>setErr(e.message));
+  const load=async()=>{const [pr,cr]=await Promise.allSettled([getProducts({}),getCategories()]);if(pr.status==='fulfilled')setData(pr.value||[]);else setErr(pr.reason?.message||String(pr.reason));if(cr.status==='fulfilled')setCats(cr.value||[]);else console.warn('Admin categories load skipped:',cr.reason?.message||cr.reason)};
   useEffect(()=>{
     load();
     try{

@@ -28,8 +28,22 @@ export async function getProducts({category,search,sort='newest',minPrice,maxPri
 }
 export async function getProduct(slug){
   if(!supabase)return null;
-  const {data,error}=await supabase.from('products').select('*').eq('slug',slug).eq('active',true).maybeSingle();
+  const raw=decodeURIComponent(String(slug||'')).trim();
+  if(!raw)return null;
+  let {data,error}=await supabase.from('products').select('*').eq('slug',raw).eq('active',true).maybeSingle();
   if(error)throw error;
+  // Direct product URLs must also work when a customer has an older/case-different
+  // slug or when the shared link uses a normalized SKU such as /product/MCD311.
+  if(!data){
+    const key=raw.toLowerCase().replace(/[^a-z0-9]/g,'');
+    const {data:candidates,error:candidateError}=await supabase.from('products').select('*').eq('active',true).limit(2000);
+    if(candidateError)throw candidateError;
+    data=(candidates||[]).find(p=>{
+      const a=String(p.slug||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+      const b=String(p.sku||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+      return a===key||b===key;
+    })||null;
+  }
   if(!data)return null;
   const {data:images,error:imageError}=await supabase.from('product_images').select('id,product_id,url,sort_order').eq('product_id',data.id).order('sort_order',{ascending:true});
   if(imageError){console.warn('Product gallery load skipped:',imageError.message);return {...data,product_images:[]};}
