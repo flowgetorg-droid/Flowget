@@ -28,12 +28,33 @@ export async function getProducts({category,search,sort='newest',minPrice,maxPri
 }
 export async function getProduct(slug){
   if(!supabase)return null;
-  const {data,error}=await supabase.from('products').select('*').eq('slug',slug).eq('active',true).maybeSingle();
+  const raw=decodeURIComponent(String(slug||'')).trim();
+  if(!raw)return null;
+  const clean=raw.split('?')[0].split('#')[0].trim();
+  let {data,error}=await supabase.from('products').select('*').eq('slug',clean).eq('active',true).maybeSingle();
   if(error)throw error;
+  if(!data){
+    const key=clean.toLowerCase().replace(/[^a-z0-9]/g,'');
+    const {data:candidates,error:candidateError}=await supabase.from('products').select('*').eq('active',true).limit(2000);
+    if(candidateError)throw candidateError;
+    data=(candidates||[]).find(p=>{
+      const a=String(p.slug||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+      const b=String(p.sku||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+      return a===key||b===key;
+    })||null;
+  }
   if(!data)return null;
   const {data:images,error:imageError}=await supabase.from('product_images').select('id,product_id,url,sort_order').eq('product_id',data.id).order('sort_order',{ascending:true});
   if(imageError){console.warn('Product gallery load skipped:',imageError.message);return {...data,product_images:[]};}
   return {...data,product_images:images||[]};
+}
+export async function validateCoupon(code,subtotal){
+  if(!supabase)throw new Error('Supabase is not configured.');
+  const clean=String(code||'').trim().toUpperCase();
+  if(!clean)return {valid:false,discount:0,message:'কুপন কোড লিখুন।'};
+  const {data,error}=await supabase.rpc('validate_coupon',{p_code:clean,p_subtotal:Number(subtotal)||0});
+  if(error)throw error;
+  return data||{valid:false,discount:0,message:'কুপন যাচাই করা যায়নি।'};
 }
 export async function getBanners(){if(!supabase)return[];const now=new Date().toISOString();const {data,error}=await supabase.from('banners').select('*').eq('active',true).or(`start_at.is.null,start_at.lte.${now}`).or(`end_at.is.null,end_at.gte.${now}`).order('sort_order');if(error)throw error;return data||[]}
 export async function getPage(slug){if(!supabase)return null;const {data,error}=await supabase.from('pages').select('*').eq('slug',slug).eq('active',true).maybeSingle();if(error)throw error;return data}
