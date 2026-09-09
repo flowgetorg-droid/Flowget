@@ -37,6 +37,7 @@ create table if not exists public.categories (
   icon text,
   image_url text,
   description text,
+  short_description text,
   seo_title text,
   seo_description text,
   sort_order int default 0,
