@@ -59,3 +59,7 @@ The admin product loader no longer requests a PostgREST embedded `product_images
 - Product landing page renders Description and Specifications as separate responsive sections.
 - Product gallery is loaded through a separate `product_images` query, avoiding Supabase relationship/schema-cache dependency.
 - Schema migration contains additive compatibility fields and safe legacy-value copying. It does not drop tables/columns or truncate/delete existing business data.
+
+
+## Safe product delete
+Run `supabase/PRODUCT_DELETE_SAFE_RPC.sql` once. Products referenced by historical order items are archived (`active=false`) instead of deleted, preserving order history.
