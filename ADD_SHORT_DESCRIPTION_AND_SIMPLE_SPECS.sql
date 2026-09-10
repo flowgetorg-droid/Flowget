@@ -1,5 +1,5 @@
--- FlowGet additive product content update
--- Safe for the existing database: no DROP, TRUNCATE or DELETE.
+-- FlowGet additive product content compatibility migration
+-- Safe for an existing database: no DROP, TRUNCATE or DELETE.
 -- Run once in Supabase SQL Editor.
 
 alter table if exists public.products

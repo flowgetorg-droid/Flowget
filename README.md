@@ -63,3 +63,23 @@ The admin product loader no longer requests a PostgREST embedded `product_images
 
 ## Safe product delete
 Run `supabase/PRODUCT_DELETE_SAFE_RPC.sql` once. Products referenced by historical order items are archived (`active=false`) instead of deleted, preserving order history.
+
+## Product schema compatibility
+
+- Product editor sends only real `products` fields; UI-only fields such as `product_images` and `effective_price` are never sent to the table.
+- Short Description is stored in `specifications.short_description`, so an older database without a `short_description` column will not block Product Save.
+- Product queries have a compatibility fallback for older schemas missing optional filter/sort columns.
+- Product gallery is queried separately from `product_images`; missing gallery data does not make the product itself disappear.
+- For full database alignment on an existing Supabase project, run `supabase/ADD_PRODUCT_SCHEMA_COMPATIBILITY.sql` once.
+
+## Safe product delete
+
+Run `supabase/PRODUCT_DELETE_SAFE_RPC.sql` once. Products referenced by historical order items are archived (`active=false`) instead of deleted, preserving order history.
+
+## Product schema compatibility (current production)
+
+The current production `products` table has both legacy and current product fields, including `specifications` as `text` and `short_description` as `text`. The frontend is compatible with this production schema and also supports the fresh-schema JSONB `specifications` format.
+
+The admin product editor never spreads the entire form into `products`. UI-only fields such as `product_images` and generated `effective_price` are excluded. Gallery rows are stored in `product_images` separately.
+
+For the GitHub-connected Cloudflare Pages project, upload the **contents of the project root** to the repository's `main` branch. Do not create an extra `FlowGet_FINAL.../` parent directory inside the repository.

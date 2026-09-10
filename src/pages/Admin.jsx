@@ -90,7 +90,7 @@ function Dashboard(){
     <div className="card visitorpanel"><div className="panelhead"><div><h2>Visitor Activity</h2><p className="muted">Live-ish activity from the last 30 minutes.</p></div><button className="btn smallbtn" onClick={load}>Refresh</button></div>{s.recent.length?<div className="visitorlist">{s.recent.map(v=><div className="visitorrow" key={v.id}><span className="dot"/><div><strong>{v.device_type||'Visitor'}</strong><small>{v.last_path||'/'} · {new Date(v.started_at).toLocaleTimeString()}</small></div></div>)}</div>:<div className="empty">No visitor activity yet. Once the tracking code is deployed, new visits will appear here.</div>}</div>
   </>
 }
-function specificationsToText(value){if(!value||typeof value!=='object')return '';if(typeof value.details==='string')return value.details;return Object.entries(value).map(([k,v])=>`${k}: ${String(v??'')}`).join('\n')}
+function specificationsToText(value){if(value==null)return '';if(typeof value==='string')return value;if(typeof value!=='object')return String(value);if(typeof value.details==='string')return value.details;return Object.entries(value).filter(([k])=>k!=='short_description').map(([k,v])=>`${k}: ${String(v??'')}`).join('\n')}
 function Products({setErr}){
   const[data,setData]=useState([]),[cats,setCats]=useState([]),[editing,setEditing]=useState(null),[form,setForm]=useState(emptyProduct),[saving,setSaving]=useState(false),[uploading,setUploading]=useState(false),[galleryUrls,setGalleryUrls]=useState([]),[existingGallery,setExistingGallery]=useState([]),[specsText,setSpecsText]=useState('');
   const load=()=>Promise.all([getProducts({}),getCategories()]).then(([p,c])=>{setData(p);setCats(c)}).catch(e=>setErr(e.message));
@@ -117,25 +117,64 @@ function Products({setErr}){
   const clearProductDraft=()=>{try{localStorage.removeItem('flowget-admin-product-edit-v2')}catch{}};
   const save=async e=>{e.preventDefault();setErr('');setSaving(true);try{
     const cleanSpecText=String(specsText||'').trim();
-    // Only send real products-table columns. product_images is a UI-only relation.
-    const payload={
-      name:String(form.name||'').trim(), slug:String(form.slug||'').trim(), description:String(form.description||''),
-      specifications:cleanSpecText?{details:cleanSpecText}:{}, category_id:form.category_id||null,
-      brand:String(form.brand||'').trim()||null, sku:String(form.sku||'').trim()||null,
-      price:Number(form.price), discount_price:form.discount_price===''?null:Number(form.discount_price),
-      stock:Number(form.stock), main_image:String(form.main_image||'').trim()||null,
-      video_url:String(form.video_url||'').trim()||null, active:Boolean(form.active),
-      short_description:String(form.short_description||'').trim()||null
+    const shortDescription=String(form.short_description||'').trim()||null;
+    // Product specifications exist as TEXT in the user's current database and
+    // as JSONB in the fresh schema. We start with the rich JSONB shape and
+    // transparently retry with plain TEXT if the database uses the legacy type.
+    const specJson={details:cleanSpecText};
+    if(shortDescription)specJson.short_description=shortDescription;
+    const basePayload={
+      name:String(form.name||'').trim(),
+      slug:String(form.slug||'').trim(),
+      description:form.description||null,
+      category_id:form.category_id||null,
+      brand:form.brand||null,
+      sku:form.sku||null,
+      price:Number(form.price)||0,
+      discount_price:form.discount_price===''?null:Number(form.discount_price),
+      stock:Number(form.stock)||0,
+      main_image:form.main_image||null,
+      video_url:form.video_url||null,
+      active:Boolean(form.active),
+      short_description:shortDescription,
+      specifications:specJson
     };
-    const r=editing?await supabase.from('products').update(payload).eq('id',editing):await supabase.from('products').insert(payload).select('id').single();
-    if(r.error)throw r.error;
+
+    // Never spread the entire form into Supabase: UI-only fields such as
+    // product_images/effective_price/rating can never leak into this request.
+    // Missing columns are removed one-by-one and the specifications type is
+    // retried as TEXT when connected to the legacy FlowGet schema.
+    const missingColumn=/column [\"']?([a-zA-Z_][a-zA-Z0-9_]*)[\"']? (?:of|does not exist)|Could not find the '([a-zA-Z_][a-zA-Z0-9_]*)' column/i;
+    const specType=/type json|jsonb|text|invalid input syntax for type json|cannot cast|column .*specifications/i;
+    let writePayload={...basePayload};
+    let specRetriedAsText=false;
+    let r=null;
+    for(let attempt=0;attempt<12;attempt++){
+      r=editing?await supabase.from('products').update(writePayload).eq('id',editing):await supabase.from('products').insert(writePayload).select('id').single();
+      if(!r.error)break;
+      const msg=String(r.error.message||'');
+      const m=msg.match(missingColumn);
+      const missing=m?.[1]||m?.[2];
+      if(missing&&missing in writePayload){
+        console.warn(`FlowGet product compatibility: skipping missing column ${missing}`);
+        const next={...writePayload};delete next[missing];writePayload=next;continue;
+      }
+      if(!specRetriedAsText && 'specifications' in writePayload && specType.test(msg)){
+        specRetriedAsText=true;
+        const next={...writePayload,specifications:cleanSpecText};
+        writePayload=next;
+        continue;
+      }
+      break;
+    }
+    if(r?.error)throw r.error;
     const productId=editing||r.data?.id;
+
     if(galleryUrls.length&&productId){const{error}=await supabase.from('product_images').insert(galleryUrls.map((url,i)=>({product_id:productId,url,sort_order:existingGallery.length+i+10})));if(error)throw error}
     clearProductDraft();setEditing(null);setForm(emptyProduct);setGalleryUrls([]);setExistingGallery([]);setSpecsText('');await load();
   }catch(e){setErr(e.message)}finally{setSaving(false)}};
   const edit=p=>{
-    const {product_images,...productRow}=p||{};
-    setEditing(p.id);setForm({...emptyProduct,...productRow,category_id:p.category_id||'',price:p.price??'',discount_price:p.discount_price??'',stock:p.stock??0,video_url:p.video_url||'',short_description:p.short_description||''});
+    setEditing(p.id);setForm({...emptyProduct,...p,category_id:p.category_id||'',price:p.price??'',discount_price:p.discount_price??'',stock:p.stock??0,video_url:p.video_url||'',short_description:p.specifications?.short_description||p.short_description||''});
     setSpecsText(specificationsToText(p.specifications));
     setGalleryUrls([]);setExistingGallery((p.product_images||[]).slice().sort((a,b)=>Number(a.sort_order||0)-Number(b.sort_order||0)));
   };

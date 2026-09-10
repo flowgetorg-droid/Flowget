@@ -51,6 +51,7 @@ create table if not exists public.products (
   name text not null,
   slug text unique not null,
   description text,
+  short_description text,
   specifications jsonb default '{}'::jsonb,
   category_id uuid references public.categories(id) on delete set null,
   brand text,
@@ -73,6 +74,13 @@ create table if not exists public.products (
   created_at timestamptz default now(),
   updated_at timestamptz default now()
 );
+
+-- Additive compatibility for existing FlowGet databases.
+alter table if exists public.products
+  add column if not exists short_description text;
+
+comment on column public.products.short_description is
+  'Optional short product summary shown beside price; full description remains in description.';
 
 create table if not exists public.product_images (
   id uuid primary key default gen_random_uuid(),
