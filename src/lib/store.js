@@ -44,9 +44,15 @@ export async function getProduct(slug){
     })||null;
   }
   if(!data)return null;
-  const {data:images,error:imageError}=await supabase.from('product_images').select('id,product_id,url,sort_order').eq('product_id',data.id).order('sort_order',{ascending:true});
-  if(imageError){console.warn('Product gallery load skipped:',imageError.message);return {...data,product_images:[]};}
-  return {...data,product_images:images||[]};
+  // Return the product immediately. Gallery images are loaded separately so a
+  // slow image query never makes the product page look like a missing product.
+  return {...data,product_images:[]};
+}
+export async function getProductImages(productId){
+  if(!supabase||!productId)return [];
+  const {data,error}=await supabase.from('product_images').select('id,product_id,url,sort_order').eq('product_id',productId).order('sort_order',{ascending:true});
+  if(error){console.warn('Product gallery load skipped:',error.message);return [];}
+  return data||[];
 }
 export async function validateCoupon(code,subtotal){
   if(!supabase)throw new Error('Supabase is not configured.');

@@ -117,7 +117,16 @@ function Products({setErr}){
   const clearProductDraft=()=>{try{localStorage.removeItem('flowget-admin-product-edit-v2')}catch{}};
   const save=async e=>{e.preventDefault();setErr('');setSaving(true);try{
     const cleanSpecText=String(specsText||'').trim();
-    const payload={...form,price:Number(form.price),discount_price:form.discount_price===''?null:Number(form.discount_price),stock:Number(form.stock),category_id:form.category_id||null,sku:form.sku||null,video_url:form.video_url||null,short_description:String(form.short_description||'').trim()||null,specifications:cleanSpecText?{details:cleanSpecText}:{}};
+    // Only send real products-table columns. product_images is a UI-only relation.
+    const payload={
+      name:String(form.name||'').trim(), slug:String(form.slug||'').trim(), description:String(form.description||''),
+      specifications:cleanSpecText?{details:cleanSpecText}:{}, category_id:form.category_id||null,
+      brand:String(form.brand||'').trim()||null, sku:String(form.sku||'').trim()||null,
+      price:Number(form.price), discount_price:form.discount_price===''?null:Number(form.discount_price),
+      stock:Number(form.stock), main_image:String(form.main_image||'').trim()||null,
+      video_url:String(form.video_url||'').trim()||null, active:Boolean(form.active),
+      short_description:String(form.short_description||'').trim()||null
+    };
     const r=editing?await supabase.from('products').update(payload).eq('id',editing):await supabase.from('products').insert(payload).select('id').single();
     if(r.error)throw r.error;
     const productId=editing||r.data?.id;
@@ -125,7 +134,8 @@ function Products({setErr}){
     clearProductDraft();setEditing(null);setForm(emptyProduct);setGalleryUrls([]);setExistingGallery([]);setSpecsText('');await load();
   }catch(e){setErr(e.message)}finally{setSaving(false)}};
   const edit=p=>{
-    setEditing(p.id);setForm({...emptyProduct,...p,category_id:p.category_id||'',price:p.price??'',discount_price:p.discount_price??'',stock:p.stock??0,video_url:p.video_url||'',short_description:p.short_description||''});
+    const {product_images,...productRow}=p||{};
+    setEditing(p.id);setForm({...emptyProduct,...productRow,category_id:p.category_id||'',price:p.price??'',discount_price:p.discount_price??'',stock:p.stock??0,video_url:p.video_url||'',short_description:p.short_description||''});
     setSpecsText(specificationsToText(p.specifications));
     setGalleryUrls([]);setExistingGallery((p.product_images||[]).slice().sort((a,b)=>Number(a.sort_order||0)-Number(b.sort_order||0)));
   };
