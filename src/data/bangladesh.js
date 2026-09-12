@@ -3,7 +3,7 @@
 // Fallback: nested Bangladesh geo JSON. Data is cached locally after a successful load.
 const PRIMARY='https://bdapis.com/api/v1.2';
 const FALLBACK_API='https://iqbalhasandev.github.io/bangladesh-geo-json/bangladesh-geo.json';
-const CACHE='flowget-bd-geo-v4';
+const CACHE='flowget-bd-geo-v5';
 
 const fallbackDivisions=[
   {name:'Barishal',bn_name:'বরিশাল',districts:[]},{name:'Chattogram',bn_name:'চট্টগ্রাম',districts:[]},
@@ -11,6 +11,41 @@ const fallbackDivisions=[
   {name:'Mymensingh',bn_name:'ময়মনসিংহ',districts:[]},{name:'Rajshahi',bn_name:'রাজশাহী',districts:[]},
   {name:'Rangpur',bn_name:'রংপুর',districts:[]},{name:'Sylhet',bn_name:'সিলেট',districts:[]}
 ];
+
+
+
+// Dhaka District / Dhaka Metropolitan Police (DMP) police stations.
+// The Bangladesh National Portal lists 5 administrative upazilas for Dhaka District,
+// while Bangladesh Police/DMP separately lists the metropolitan police stations.
+// Checkout uses the combined list so customers in Dhaka city can select their actual thana.
+const DHAKA_DMP_THANAS=[
+  ['Adabor','আদাবর'],['Airport','এয়ারপোর্ট'],['Badda','বাড্ডা'],['Banani','বনানী'],['Bangshal','বংশাল'],
+  ['Bhashantek','ভাষানটেক'],['Cantonment','ক্যান্টনমেন্ট'],['Chackbazar','চকবাজার'],['Dakshin Khan','দক্ষিণখান'],
+  ['Darus-Salam','দারুস-সালাম'],['Demra','ডেমরা'],['Dhanmondi','ধানমন্ডি'],['Gandaria','গেন্ডারিয়া'],['Gulshan','গুলশান'],
+  ['Hazaribag','হাজারীবাগ'],['Jatrabari','যাত্রাবাড়ী'],['Kadamtoli','কদমতলী'],['Kafrul','কাফরুল'],['Kalabagan','কলাবাগান'],
+  ['Kamrangirchar','কামরাঙ্গীরচর'],['Khilgaon','খিলগাঁও'],['Khilkhet','খিলক্ষেত'],['Kotwali','কোতোয়ালি'],['Lalbag','লালবাগ'],
+  ['Mirpur Model','মিরপুর মডেল'],['Mohammadpur','মোহাম্মদপুর'],['Motijheel','মতিঝিল'],['Mugda','মুগদা'],['New Market','নিউ মার্কেট'],
+  ['Pallabi','পল্লবী'],['Paltan Model','পল্টন মডেল'],['Ramna Model','রমনা মডেল'],['Rampura','রামপুরা'],['Rupnagar','রূপনগর'],
+  ['Sabujbag','সবুজবাগ'],['Shah Ali','শাহ আলী'],['Shahbag','শাহবাগ'],['Shahjahanpur','শাহজাহানপুর'],['Sher e Bangla Nagar','শেরেবাংলা নগর'],
+  ['Shyampur','শ্যামপুর'],['Sutrapur','সূত্রাপুর'],['Tejgaon','তেজগাঁও'],['Tejgaon I/A','তেজগাঁও শিল্পাঞ্চল'],['Turag','তুরাগ'],
+  ['Uttara Model','উত্তরা মডেল'],['Uttarkhan','উত্তরখান'],['Uttara West','উত্তরা পশ্চিম'],['Vatara','ভাটারা'],['Wari','ওয়ারী']
+].map(([name,bn_name])=>({name,bn_name}));
+
+function mergeDhakaThanas(divisions){
+  const dhaka=divisions.find(x=>x.name.toLowerCase()==='dhaka' || x.bn_name==='ঢাকা');
+  if(!dhaka)return divisions;
+  const seen=new Set((dhaka.districts||[]).flatMap(d=>(d.upazilas||[]).map(u=>`${u.name}|${u.bn_name}`)));
+  let district=dhaka.districts.find(d=>d.name.toLowerCase()==='dhaka' || d.bn_name==='ঢাকা');
+  if(!district){
+    district={name:'Dhaka',bn_name:'ঢাকা',upazilas:[]};
+    dhaka.districts.push(district);
+  }
+  for(const t of DHAKA_DMP_THANAS){
+    const key=`${t.name}|${t.bn_name}`;
+    if(!seen.has(key))district.upazilas.push(t);
+  }
+  return divisions;
+}
 
 function valid(data){return Array.isArray(data)&&data.length===8&&data.every(x=>x&&typeof x.name==='string'&&typeof x.bn_name==='string'&&Array.isArray(x.districts)&&x.districts.every(d=>Array.isArray(d.upazilas)));}
 const text=(o,...keys)=>{for(const k of keys){if(o&&o[k]!=null&&String(o[k]).trim())return String(o[k]).trim()}return ''};
@@ -38,15 +73,15 @@ async function loadPrimary(){
     if(d)d.upazilas.push({name,bn_name:bn});
   }
   if(!valid(divisions)||divisions.some(d=>!d.districts.length))throw new Error('Incomplete primary location data');
-  return divisions;
+  return mergeDhakaThanas(divisions);
 }
 
 async function loadFallback(){const data=await json(FALLBACK_API);if(!valid(data))throw new Error('Invalid fallback location data');return data}
 
 export async function getBangladeshLocations(){
-  try{const cached=JSON.parse(localStorage.getItem(CACHE)||'null');if(valid(cached))return cached}catch{}
+  try{const cached=JSON.parse(localStorage.getItem(CACHE)||'null');if(valid(cached))return mergeDhakaThanas(cached)}catch{}
   try{const data=await loadPrimary();try{localStorage.setItem(CACHE,JSON.stringify(data))}catch{}return data}catch(primaryErr){
-    try{const data=await loadFallback();try{localStorage.setItem(CACHE,JSON.stringify(data))}catch{}return data}catch(fallbackErr){
+    try{const data=mergeDhakaThanas(await loadFallback());try{localStorage.setItem(CACHE,JSON.stringify(data))}catch{}return data}catch(fallbackErr){
       throw new Error('বাংলাদেশের বিভাগ, জেলা ও উপজেলা/থানা তালিকা লোড করা যায়নি।');
     }
   }

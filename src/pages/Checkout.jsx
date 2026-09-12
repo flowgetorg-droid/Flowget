@@ -35,7 +35,7 @@ export default function Checkout(){
  const submit=async e=>{
   e.preventDefault();setErr('');
   if(!c.length)return;
-  if(!f.division||!f.district||!f.area){setErr('বিভাগ, জেলা ও উপজেলা নির্বাচন করুন।');return}
+  if(!f.division||!f.district){setErr('বিভাগ ও জেলা নির্বাচন করুন।');return}
   const phone=f.phone.replace(/[\s-]/g,'');
   if(!/^01\d{9}$/.test(phone)){setErr('সঠিক বাংলাদেশি মোবাইল নম্বর দিন।');return}
   setBusy(true);
@@ -61,7 +61,7 @@ export default function Checkout(){
      <div className="field"><label>বিভাগ <span className="requiredMark">*</span></label><select className="locationSelect" required value={f.division} onChange={onDivision} disabled={locLoading}><option value="">{locLoading?'তালিকা লোড হচ্ছে...':'বিভাগ নির্বাচন করুন'}</option>{locations.map(x=><option key={x.name} value={x.bn_name}>{x.bn_name}</option>)}</select></div>
      <div className="field"><label>জেলা <span className="requiredMark">*</span></label><select className="locationSelect" required value={f.district} onChange={onDistrict} disabled={!division||locLoading}><option value="">জেলা নির্বাচন করুন</option>{districts.map(x=><option key={x.name} value={x.bn_name}>{x.bn_name}</option>)}</select></div>
     </div>
-    <div className="field"><label>উপজেলা / থানা <span className="requiredMark">*</span></label><select className="locationSelect" required value={f.area} onChange={e=>setField('area',e.target.value)} disabled={!district||locLoading}><option value="">উপজেলা / থানা নির্বাচন করুন</option>{upazilas.map(x=><option key={x.name} value={x.bn_name}>{x.bn_name}</option>)}</select></div>
+    <div className="field"><label>উপজেলা / থানা <span className="muted">(ঐচ্ছিক)</span></label><select className="locationSelect" value={f.area} onChange={e=>setField('area',e.target.value)} disabled={!district||locLoading}><option value="">উপজেলা / থানা নির্বাচন করুন</option>{upazilas.map(x=><option key={x.name} value={x.bn_name}>{x.bn_name}</option>)}</select></div>
     {locErr&&<div className="notice" role="alert">{locErr}</div>}
     <div className="field"><label>বিস্তারিত ঠিকানা</label><textarea required rows="3" value={f.address} onChange={e=>setField('address',e.target.value)} placeholder="বাড়ি/রোড/এলাকার বিস্তারিত ঠিকানা লিখুন"/></div>
     <div className="field"><label>কুপন কোড (যদি থাকে)</label><div style={{display:'flex',gap:8,alignItems:'stretch'}}><input style={{flex:1}} value={f.coupon} onChange={e=>setField('coupon',e.target.value.toUpperCase())} placeholder="কুপন কোড লিখুন"/><button type="button" className="btn secondarybtn" disabled={couponBusy||!f.coupon.trim()} onClick={applyCoupon}>{couponBusy?'যাচাই হচ্ছে...':'কুপন প্রয়োগ করুন'}</button></div>{couponInfo.message&&<div className="notice" role="status" style={{marginTop:8}}>{couponInfo.valid?`কুপন প্রয়োগ হয়েছে — ছাড় ৳${discount}`:couponInfo.message}</div>}</div>

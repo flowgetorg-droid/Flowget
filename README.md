@@ -83,3 +83,7 @@ The current production `products` table has both legacy and current product fiel
 The admin product editor never spreads the entire form into `products`. UI-only fields such as `product_images` and generated `effective_price` are excluded. Gallery rows are stored in `product_images` separately.
 
 For the GitHub-connected Cloudflare Pages project, upload the **contents of the project root** to the repository's `main` branch. Do not create an extra `FlowGet_FINAL.../` parent directory inside the repository.
+
+
+### Checkout location note
+উপজেলা / থানা (Area) is optional. Customers can place an order with Division and District selected even if they leave Thana/Upazila blank.
