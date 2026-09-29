@@ -39,10 +39,11 @@ export async function getProduct(slug){
   if(error)throw error;
   const key=clean.toLowerCase().replace(/[^a-z0-9]/g,'');
   const product=(data||[]).find(p=>{
-    if(p.active!==undefined&&p.active!==true)return false;
+    if(p.active===false)return false;
     const a=String(p.slug||'').toLowerCase().replace(/[^a-z0-9]/g,'');
     const b=String(p.sku||'').toLowerCase().replace(/[^a-z0-9]/g,'');
-    return a===key||b===key;
+    const c=String(p.id||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+    return a===key||b===key||c===key;
   })||null;
   return product?{...product,product_images:[]}:null;
 }
