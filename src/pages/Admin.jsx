@@ -68,26 +68,51 @@ export default function Admin(){
 }
 function AdminLogin(){const[e,setE]=useState({email:'',password:''}),[err,setErr]=useState(''),[busy,setBusy]=useState(false);return <div className="container"><div className="card adminlogin"><h1>🔐 FlowGet Admin</h1><p className="muted">Phone থেকে product ও order manage করুন।</p><form onSubmit={async x=>{x.preventDefault();setErr('');setBusy(true);const{error}=await supabase.auth.signInWithPassword(e);setBusy(false);if(error)setErr(error.message.includes('Invalid login')?'Invalid email or password.':error.message)}}><Text f="email" type="email" v={e.email} set={v=>setE({...e,email:v})}/><Text f="password" type="password" v={e.password} set={v=>setE({...e,password:v})}/><button className="btn" disabled={busy}>{busy?'Logging in…':'Login'}</button>{err&&<div className="notice" role="alert">{err}</div>}</form></div></div>}
 function Dashboard(){
-  const[s,setS]=useState({orders:0,products:0,pending:0,sales:0,activeVisitors:0,events:0,recent:[]}),[loading,setLoading]=useState(true);
+  const[s,setS]=useState({orders:0,products:0,pending:0,sales:0,visitor4h:0,visitor24h:0,visitor7d:0,visitor30d:0,recent:[]}),[loading,setLoading]=useState(true);
   const load=async()=>{
-    const since=new Date(Date.now()-30*60*1000).toISOString();
-    const recentSince=new Date(Date.now()-24*60*60*1000).toISOString();
-    const[o,p,sess,events]=await Promise.all([
+    const now=Date.now();
+    const since30d=new Date(now-30*24*60*60*1000).toISOString();
+    const[o,p,sess]=await Promise.all([
       supabase.from('orders').select('id,total,status'),
       supabase.from('products').select('id'),
-      supabase.from('visitor_sessions').select('id,started_at,last_path,device_type,referrer').gte('started_at',since).order('started_at',{ascending:false}).limit(100),
-      supabase.from('analytics_events').select('id,event_name,path,session_id,created_at').gte('created_at',recentSince).order('created_at',{ascending:false}).limit(20)
+      supabase.from('visitor_sessions').select('id,started_at,last_seen_at,last_path,device_type,referrer').gte('last_seen_at',since30d).order('last_seen_at',{ascending:false}).limit(5000)
     ]);
     const rows=o.data||[]; const visitors=sess.data||[];
-    setS({orders:rows.length,products:(p.data||[]).length,pending:rows.filter(x=>String(x.status).toLowerCase()==='pending').length,sales:rows.filter(x=>String(x.status).toLowerCase()!=='cancelled').reduce((a,x)=>a+Number(x.total||0),0),activeVisitors:visitors.length,events:(events.data||[]).length,recent:visitors.slice(0,8)});
-    if(o.error||p.error||sess.error||events.error){console.warn('Admin dashboard load:',o.error||p.error||sess.error||events.error)}
+    const uniqueCount=(ms)=>{
+      const cutoff=now-ms;
+      return new Set(visitors.filter(v=>new Date(v.last_seen_at||v.started_at||0).getTime()>=cutoff).map(v=>v.id)).size;
+    };
+    setS({
+      orders:rows.length,
+      products:(p.data||[]).length,
+      pending:rows.filter(x=>String(x.status).toLowerCase()==='pending').length,
+      sales:rows.filter(x=>String(x.status).toLowerCase()!=='cancelled').reduce((a,x)=>a+Number(x.total||0),0),
+      visitor4h:uniqueCount(4*60*60*1000),
+      visitor24h:uniqueCount(24*60*60*1000),
+      visitor7d:uniqueCount(7*24*60*60*1000),
+      visitor30d:uniqueCount(30*24*60*60*1000),
+      recent:visitors.slice(0,8)
+    });
+    if(o.error||p.error||sess.error)console.warn('Admin dashboard load:',o.error||p.error||sess.error);
     setLoading(false);
   };
   useEffect(()=>{load();const id=setInterval(load,60000);return()=>clearInterval(id)},[]);
   if(loading)return <div className="admincards"><div className="stat">Loading…</div><div className="stat">Loading…</div><div className="stat">Loading…</div><div className="stat">Loading…</div></div>;
   return <>
-    <div className="admincards"><div className="stat">Orders<strong>{s.orders}</strong></div><div className="stat">Pending<strong>{s.pending}</strong></div><div className="stat">Products<strong>{s.products}</strong></div><div className="stat">Sales<strong>৳{s.sales}</strong></div><div className="stat visitorstat">Active visitors<strong>{s.activeVisitors}</strong><small>last 30 min</small></div><div className="stat visitorstat">Events<strong>{s.events}</strong><small>last 24 hours</small></div></div>
-    <div className="card visitorpanel"><div className="panelhead"><div><h2>Visitor Activity</h2><p className="muted">Live-ish activity from the last 30 minutes.</p></div><button className="btn smallbtn" onClick={load}>Refresh</button></div>{s.recent.length?<div className="visitorlist">{s.recent.map(v=><div className="visitorrow" key={v.id}><span className="dot"/><div><strong>{v.device_type||'Visitor'}</strong><small>{v.last_path||'/'} · {new Date(v.started_at).toLocaleTimeString()}</small></div></div>)}</div>:<div className="empty">No visitor activity yet. Once the tracking code is deployed, new visits will appear here.</div>}</div>
+    <div className="admincards">
+      <div className="stat">Orders<strong>{s.orders}</strong></div>
+      <div className="stat">Pending<strong>{s.pending}</strong></div>
+      <div className="stat">Products<strong>{s.products}</strong></div>
+      <div className="stat">Sales<strong>৳{s.sales}</strong></div>
+      <div className="stat visitorstat">Visitors<strong>{s.visitor4h}</strong><small>last 4 hours</small></div>
+      <div className="stat visitorstat">Visitors<strong>{s.visitor24h}</strong><small>last 24 hours</small></div>
+      <div className="stat visitorstat">Visitors<strong>{s.visitor7d}</strong><small>last 7 days</small></div>
+      <div className="stat visitorstat">Visitors<strong>{s.visitor30d}</strong><small>last 30 days</small></div>
+    </div>
+    <div className="card visitorpanel">
+      <div className="panelhead"><div><h2>Visitor Activity</h2><p className="muted">Unique visitor sessions active in each selected period. Updates automatically every minute.</p></div><button className="btn smallbtn" onClick={load}>Refresh</button></div>
+      {s.recent.length?<div className="visitorlist">{s.recent.map(v=><div className="visitorrow" key={v.id}><span className="dot"/><div><strong>{v.device_type||'Visitor'}</strong><small>{v.last_path||'/'} · {new Date(v.last_seen_at||v.started_at).toLocaleString()}</small></div></div>)}</div>:<div className="empty">No visitor activity yet. Once the tracking code is deployed, new visits will appear here.</div>}
+    </div>
   </>
 }
 function specificationsToText(value){if(value==null)return '';if(typeof value==='string')return value;if(typeof value!=='object')return String(value);if(typeof value.details==='string')return value.details;return Object.entries(value).filter(([k])=>k!=='short_description').map(([k,v])=>`${k}: ${String(v??'')}`).join('\n')}

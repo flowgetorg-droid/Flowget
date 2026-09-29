@@ -70,7 +70,7 @@ export default function Checkout(){
     {err&&<div className="notice" role="alert">{err}</div>}
     <button className="btn" disabled={busy||locLoading}>{busy?'অর্ডার দেওয়া হচ্ছে...':'অর্ডার নিশ্চিত করুন'}</button>
    </form>
-   <div className="card summary"><h3>অর্ডারের সারাংশ</h3>{c.map(x=><p key={x.id}>{x.name} × {x.qty}<b>৳{(Number(x.discount_price??x.price)||0)*x.qty}</b></p>)}<hr/><p>পণ্যের মূল্য <b>৳{sub}</b></p>{couponInfo.valid&&<p><span>কুপন ছাড়</span> <b style={{color:'#16a34a'}}>-৳{discount}</b></p>}<p>ডেলিভারি চার্জ <b>৳{delivery}</b></p><h2>সর্বমোট <span>৳{total}</span></h2><small className="muted">চূড়ান্ত মূল্য, স্টক, কুপন ও ডেলিভারি চার্জ Supabase-এ নিরাপদভাবে পুনরায় যাচাই করা হবে।</small></div>
+   <div className="card summary"><h3>অর্ডারের সারাংশ</h3>{c.map(x=><p key={x.id}>{x.name} × {x.qty}<b>৳{(Number(x.discount_price??x.price)||0)*x.qty}</b></p>)}<hr/><p>পণ্যের মূল্য <b>৳{sub}</b></p>{couponInfo.valid&&<p><span>কুপন ছাড়</span> <b style={{color:'#16a34a'}}>-৳{discount}</b></p>}<p>ডেলিভারি চার্জ <b>৳{delivery}</b></p><h2>সর্বমোট <span>৳{total}</span></h2></div>
   </div>
  </div>
 }
