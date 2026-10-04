@@ -94,5 +94,5 @@ For the GitHub-connected Cloudflare Pages project, upload the **contents of the 
 - New reviews are **pending by default** and are not shown publicly until an admin approves them.
 - Admin now has a **Reviews** tab to approve/hide/delete reviews.
 - Approved reviews automatically update the product's `rating` and `review_count`.
-- For an existing Supabase project, run `CUSTOMER_REVIEWS_PHOTO_MIGRATION.sql` once.
+- For an existing Supabase project, run `CUSTOMER_REVIEWS_PHOTO_MIGRATION.sql` once. If photo upload shows `Failed to fetch`, the app first tries Supabase Storage and now automatically falls back to a compressed photo stored with the review, so the customer review is not lost. `CUSTOMER_REVIEWS_PHOTO_STORAGE_REPAIR.sql` is still recommended for normal Storage uploads.
 - The migration creates the public `review-media` Storage bucket with image-only uploads (JPG/PNG/WebP, 5MB limit) and keeps admin deletion protected.

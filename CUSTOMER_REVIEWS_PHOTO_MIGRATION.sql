@@ -23,7 +23,10 @@ with check(
 -- Review photo storage. Customer uploads are limited by the app to image files <=5MB.
 insert into storage.buckets (id,name,public,file_size_limit,allowed_mime_types)
 values ('review-media','review-media',true,5242880,array['image/jpeg','image/png','image/webp'])
-on conflict(id) do nothing;
+on conflict(id) do update set
+  public=true,
+  file_size_limit=5242880,
+  allowed_mime_types=array['image/jpeg','image/png','image/webp'];
 
 drop policy if exists "public review media read" on storage.objects;
 create policy "public review media read"

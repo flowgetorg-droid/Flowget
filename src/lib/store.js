@@ -72,6 +72,42 @@ export async function submitReview({productId,customerName,rating,reviewText,pho
   if(error)throw error;
   return data;
 }
+async function reviewPhotoFallbackDataUrl(file){
+  // Some deployments/environments can reach the Supabase database API but cannot
+  // reach the Storage upload endpoint (often shown in browsers only as
+  // "Failed to fetch"). Compress the customer photo in-browser and keep a
+  // small self-contained copy in reviews.photo_url so the review is not lost.
+  const dataUrl=await new Promise((resolve,reject)=>{
+    const reader=new FileReader();
+    reader.onload=()=>resolve(String(reader.result||''));
+    reader.onerror=()=>reject(new Error('ছবিটি পড়া যাচ্ছে না। অন্য একটি ছবি চেষ্টা করুন।'));
+    reader.readAsDataURL(file);
+  });
+  const compressed=await new Promise((resolve,reject)=>{
+    const img=new Image();
+    img.onload=()=>{
+      const max=1000;
+      const scale=Math.min(1,max/Math.max(img.naturalWidth||1,img.naturalHeight||1));
+      const canvas=document.createElement('canvas');
+      canvas.width=Math.max(1,Math.round((img.naturalWidth||1)*scale));
+      canvas.height=Math.max(1,Math.round((img.naturalHeight||1)*scale));
+      const ctx=canvas.getContext('2d');
+      if(!ctx)return reject(new Error('ছবি process করা যাচ্ছে না।'));
+      ctx.drawImage(img,0,0,canvas.width,canvas.height);
+      const out=canvas.toDataURL('image/jpeg',0.72);
+      // Keep DB payload reasonable. If the first encode is still large, reduce it again.
+      if(out.length>1100000){
+        const out2=canvas.toDataURL('image/jpeg',0.55);
+        return resolve(out2.length<out.length?out2:out);
+      }
+      resolve(out);
+    };
+    img.onerror=()=>reject(new Error('ছবিটি process করা যাচ্ছে না।'));
+    img.src=dataUrl;
+  });
+  return compressed;
+}
+
 export async function uploadReviewPhoto(file,productId){
   if(!supabase)throw new Error('Supabase is not configured.');
   if(!file)throw new Error('Please choose a photo.');
@@ -80,10 +116,21 @@ export async function uploadReviewPhoto(file,productId){
   if(file.size>5*1024*1024)throw new Error('ছবির সাইজ সর্বোচ্চ 5MB হতে হবে।');
   const ext=(file.type.split('/')[1]||'jpg').replace('jpeg','jpg');
   const path=`reviews/${productId}/${Date.now()}-${Math.random().toString(36).slice(2,10)}.${ext}`;
-  const {error}=await supabase.storage.from('review-media').upload(path,file,{upsert:false,cacheControl:'31536000',contentType:file.type});
-  if(error)throw error;
-  const {data}=supabase.storage.from('review-media').getPublicUrl(path);
-  return data?.publicUrl||'';
+  const bucket=supabase.storage.from('review-media');
+  try{
+    const {error}=await bucket.upload(path,file,{upsert:false,cacheControl:'31536000',contentType:file.type});
+    if(!error){
+      const {data}=bucket.getPublicUrl(path);
+      if(data?.publicUrl)return data.publicUrl;
+    }
+  }catch(_e){
+    // Fall through to the database-safe compressed-photo fallback below.
+  }
+  try{
+    return await reviewPhotoFallbackDataUrl(file);
+  }catch(e){
+    throw new Error(e?.message||'ছবি upload করা যায়নি।');
+  }
 }
 export async function validateCoupon(code,subtotal){
   if(!supabase)throw new Error('Supabase is not configured.');
