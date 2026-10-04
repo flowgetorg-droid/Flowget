@@ -115,7 +115,27 @@ function Dashboard(){
     </div>
   </>
 }
-function specificationsToText(value){if(value==null)return '';if(typeof value==='string')return value;if(typeof value!=='object')return String(value);if(typeof value.details==='string')return value.details;return Object.entries(value).filter(([k])=>k!=='short_description').map(([k,v])=>`${k}: ${String(v??'')}`).join('\n')}
+function specificationsToText(value){
+  if(value==null)return '';
+  if(typeof value==='string'){
+    const text=value.trim();
+    if(!text)return '';
+    // Legacy TEXT columns can contain the JSONB representation as a string.
+    // Parse it when possible so the admin editor also shows clean specifications.
+    try{
+      const parsed=JSON.parse(text);
+      if(parsed!==value)return specificationsToText(parsed);
+    }catch{}
+    return value.replace(/\\n/g,'\n');
+  }
+  if(typeof value!=='object')return String(value);
+  if(typeof value.details==='string')return specificationsToText(value.details);
+  return Object.entries(value)
+    .filter(([k])=>k!=='short_description')
+    .map(([k,v])=>`${k}: ${specificationsToText(v)}`)
+    .filter(line=>line.trim())
+    .join('\n');
+}
 function Products({setErr}){
   const[data,setData]=useState([]),[cats,setCats]=useState([]),[editing,setEditing]=useState(null),[form,setForm]=useState(emptyProduct),[saving,setSaving]=useState(false),[uploading,setUploading]=useState(false),[galleryUrls,setGalleryUrls]=useState([]),[existingGallery,setExistingGallery]=useState([]),[specsText,setSpecsText]=useState('');
   const load=()=>Promise.all([getProducts({}),getCategories()]).then(([p,c])=>{setData(p);setCats(c)}).catch(e=>setErr(e.message));
