@@ -61,16 +61,20 @@ export async function getProductReviews(productId){
 }
 export async function submitReview({productId,customerName,rating,reviewText,photoUrl=null}){
   if(!supabase)throw new Error('Supabase is not configured.');
-  const {data,error}=await supabase.from('reviews').insert({
+  // Do not chain .select() here. New customer reviews are intentionally
+  // inserted with approved=false, while public SELECT is restricted to
+  // approved reviews. A post-insert SELECT therefore triggers an RLS error
+  // even though the INSERT itself is valid.
+  const {error}=await supabase.from('reviews').insert({
     product_id:productId,
     customer_name:String(customerName||'').trim().slice(0,80),
     rating:Number(rating),
     review_text:String(reviewText||'').trim().slice(0,1000),
     photo_url:photoUrl||null,
     approved:false
-  }).select('id').single();
+  });
   if(error)throw error;
-  return data;
+  return {success:true};
 }
 async function reviewPhotoFallbackDataUrl(file){
   // Some deployments/environments can reach the Supabase database API but cannot
