@@ -53,6 +53,38 @@ export async function getProductImages(productId){
   if(error){console.warn('Product gallery load skipped:',error.message);return [];}
   return data||[];
 }
+export async function getProductReviews(productId){
+  if(!supabase||!productId)return [];
+  const {data,error}=await supabase.from('reviews').select('id,product_id,customer_name,rating,review_text,photo_url,created_at').eq('product_id',productId).eq('approved',true).order('created_at',{ascending:false}).limit(100);
+  if(error)throw error;
+  return data||[];
+}
+export async function submitReview({productId,customerName,rating,reviewText,photoUrl=null}){
+  if(!supabase)throw new Error('Supabase is not configured.');
+  const {data,error}=await supabase.from('reviews').insert({
+    product_id:productId,
+    customer_name:String(customerName||'').trim().slice(0,80),
+    rating:Number(rating),
+    review_text:String(reviewText||'').trim().slice(0,1000),
+    photo_url:photoUrl||null,
+    approved:false
+  }).select('id').single();
+  if(error)throw error;
+  return data;
+}
+export async function uploadReviewPhoto(file,productId){
+  if(!supabase)throw new Error('Supabase is not configured.');
+  if(!file)throw new Error('Please choose a photo.');
+  const allowed=['image/jpeg','image/png','image/webp'];
+  if(!allowed.includes(file.type))throw new Error('শুধু JPG, PNG বা WebP ছবি দেওয়া যাবে।');
+  if(file.size>5*1024*1024)throw new Error('ছবির সাইজ সর্বোচ্চ 5MB হতে হবে।');
+  const ext=(file.type.split('/')[1]||'jpg').replace('jpeg','jpg');
+  const path=`reviews/${productId}/${Date.now()}-${Math.random().toString(36).slice(2,10)}.${ext}`;
+  const {error}=await supabase.storage.from('review-media').upload(path,file,{upsert:false,cacheControl:'31536000',contentType:file.type});
+  if(error)throw error;
+  const {data}=supabase.storage.from('review-media').getPublicUrl(path);
+  return data?.publicUrl||'';
+}
 export async function validateCoupon(code,subtotal){
   if(!supabase)throw new Error('Supabase is not configured.');
   const clean=String(code||'').trim().toUpperCase();

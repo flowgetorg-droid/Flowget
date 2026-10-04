@@ -87,3 +87,12 @@ For the GitHub-connected Cloudflare Pages project, upload the **contents of the 
 
 ### Checkout location note
 উপজেলা / থানা (Area) is optional. Customers can place an order with Division and District selected even if they leave Thana/Upazila blank.
+
+
+## Customer reviews + photo reviews
+- Product pages now include a customer review form with 1–5 star rating and optional customer photo upload.
+- New reviews are **pending by default** and are not shown publicly until an admin approves them.
+- Admin now has a **Reviews** tab to approve/hide/delete reviews.
+- Approved reviews automatically update the product's `rating` and `review_count`.
+- For an existing Supabase project, run `CUSTOMER_REVIEWS_PHOTO_MIGRATION.sql` once.
+- The migration creates the public `review-media` Storage bucket with image-only uploads (JPG/PNG/WebP, 5MB limit) and keeps admin deletion protected.

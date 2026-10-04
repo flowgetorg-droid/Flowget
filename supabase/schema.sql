@@ -252,9 +252,12 @@ create table if not exists public.reviews (
   customer_name text,
   rating int check(rating between 1 and 5),
   review_text text,
+  photo_url text,
   approved boolean default false,
   created_at timestamptz default now()
 );
+
+alter table public.reviews add column if not exists photo_url text;
 
 create table if not exists public.admin_users (
   user_id uuid primary key references auth.users(id) on delete cascade,
@@ -1020,6 +1023,7 @@ drop policy if exists "public ads read" on public.advertisements;
 drop policy if exists "public homepage read" on public.homepage_sections;
 drop policy if exists "public pages read" on public.pages;
 drop policy if exists "public reviews read" on public.reviews;
+drop policy if exists "public reviews insert" on public.reviews;
 drop policy if exists "admin all settings" on public.website_settings;
 drop policy if exists "admin all categories" on public.categories;
 drop policy if exists "admin all products" on public.products;
@@ -1086,6 +1090,20 @@ using(active=true);
 create policy "public reviews read"
 on public.reviews for select
 using(approved=true);
+
+create policy "public reviews insert"
+on public.reviews for insert
+to anon, authenticated
+with check(
+  approved=false
+  and rating between 1 and 5
+  and char_length(trim(coalesce(customer_name,''))) between 2 and 80
+  and char_length(trim(coalesce(review_text,''))) between 5 and 1000
+  and exists(
+    select 1 from public.products p
+    where p.id=reviews.product_id and p.active=true
+  )
+);
 
 -- Admin policies.
 create policy "admin all settings"
@@ -1221,7 +1239,48 @@ before update on public.pages
 for each row execute function public.touch_updated_at();
 
 -- =========================================================
+-- 6B. REVIEW RATING AGGREGATION
+-- =========================================================
+
+create or replace function public.refresh_product_review_stats()
+returns trigger
+language plpgsql
+security definer
+set search_path=public
+as $$
+declare
+  pid uuid;
+begin
+  if tg_op <> 'INSERT' and old.product_id is not null then
+    pid := old.product_id;
+    update public.products p
+    set rating=coalesce((select round(avg(r.rating)::numeric,1) from public.reviews r where r.product_id=pid and r.approved=true),0),
+        review_count=(select count(*) from public.reviews r where r.product_id=pid and r.approved=true)
+    where p.id=pid;
+  end if;
+  if tg_op <> 'DELETE' and new.product_id is not null then
+    pid := new.product_id;
+    update public.products p
+    set rating=coalesce((select round(avg(r.rating)::numeric,1) from public.reviews r where r.product_id=pid and r.approved=true),0),
+        review_count=(select count(*) from public.reviews r where r.product_id=pid and r.approved=true)
+    where p.id=pid;
+  end if;
+  return coalesce(new,old);
+end;
+$$;
+
+drop trigger if exists reviews_refresh_product_stats on public.reviews;
+create trigger reviews_refresh_product_stats
+after insert or update of product_id,rating,approved or delete on public.reviews
+for each row execute function public.refresh_product_review_stats();
+
+update public.products p
+set rating=coalesce((select round(avg(r.rating)::numeric,1) from public.reviews r where r.product_id=p.id and r.approved=true),0),
+    review_count=(select count(*) from public.reviews r where r.product_id=p.id and r.approved=true);
+
+-- =========================================================
 -- 7. FUNCTION PERMISSIONS
+
 -- =========================================================
 
 revoke all on function public.next_order_id() from public;
@@ -1359,6 +1418,29 @@ drop policy if exists "admin banner media delete" on storage.objects;
 create policy "admin banner media delete"
 on storage.objects for delete to authenticated
 using (bucket_id='banner-media' and public.is_admin());
+
+insert into storage.buckets (id,name,public,file_size_limit,allowed_mime_types)
+values ('review-media','review-media',true,5242880,array['image/jpeg','image/png','image/webp'])
+on conflict(id) do nothing;
+
+drop policy if exists "public review media read" on storage.objects;
+create policy "public review media read"
+on storage.objects for select
+using(bucket_id='review-media');
+
+drop policy if exists "public review media insert" on storage.objects;
+create policy "public review media insert"
+on storage.objects for insert
+to anon, authenticated
+with check(
+  bucket_id='review-media'
+  and (storage.foldername(name))[1]='reviews'
+);
+
+drop policy if exists "admin review media delete" on storage.objects;
+create policy "admin review media delete"
+on storage.objects for delete to authenticated
+using(bucket_id='review-media' and public.is_admin());
 
 -- =========================================================
 -- 9. PRODUCT MEDIA + DEMO CATALOG MIGRATION
