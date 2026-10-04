@@ -92,13 +92,13 @@
 .review-preview button{position:absolute;right:-7px;top:-7px;width:24px;height:24px;border:0;border-radius:50%;background:#111827;color:#fff;cursor:pointer}
 .successnotice{border-color:#bbf7d0!important;background:#f0fdf4!important;color:#166534}
 .buttonspinner{width:14px;height:14px;border:2px solid rgba(255,255,255,.5);border-top-color:#fff;border-radius:50%;display:inline-block;animation:adminspin .8s linear infinite}
-.review-list{display:grid;gap:12px}
-.review-item{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px}
+.review-list{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:4px 2px 12px;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:thin}.review-list::-webkit-scrollbar{height:6px}.review-list::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:999px}
+.review-item{flex:0 0 340px;max-width:340px;box-sizing:border-box;background:#fff;border:1px solid var(--border);border-radius:14px;padding:14px;scroll-snap-align:start}
 .review-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
 .review-top strong{display:block;margin-bottom:4px}
 .review-top time{font-size:12px;color:var(--muted);white-space:nowrap}
 .review-item p{line-height:1.65;margin:10px 0 0;white-space:pre-wrap}
-.review-photo{display:block;width:min(320px,100%);max-height:320px;object-fit:cover;border-radius:12px;margin-top:12px;border:1px solid var(--border)}
+.review-photo{display:block;width:100%;height:190px;object-fit:cover;border-radius:12px;margin-top:12px;border:1px solid var(--border)}
 .reviews-admin{display:grid;gap:14px}
 .review-admin-list{display:grid;gap:12px}
 .review-admin-item{background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px}
@@ -121,4 +121,7 @@
   .review-top{display:block}
   .review-top time{display:block;margin-top:6px}
   .review-admin-actions .review-status{margin-right:0}
+  .review-list{gap:12px;padding-bottom:10px}
+  .review-item{flex:0 0 82vw;max-width:82vw;padding:13px}
+  .review-photo{height:180px}
 }
