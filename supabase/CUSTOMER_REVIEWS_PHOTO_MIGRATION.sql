@@ -3,6 +3,8 @@
 -- Safe/additive: it does not delete products, orders, customers, or existing reviews.
 
 alter table public.reviews add column if not exists photo_url text;
+-- Photo is optional: allow text-only reviews on older databases too.
+alter table public.reviews alter column photo_url drop not null;
 
 -- Public customers may submit only unapproved reviews for active products.
 drop policy if exists "public reviews insert" on public.reviews;

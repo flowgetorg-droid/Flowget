@@ -40,7 +40,7 @@ function Reviews({product}){
       if(file)photoUrl=await uploadReviewPhoto(file,product.id);
       await submitReview({productId:product.id,customerName:cleanName,rating,reviewText:cleanText,photoUrl});
       setName('');setRating(5);setText('');setFile(null);setPreview('');
-      setMsg('আপনার review জমা হয়েছে। Admin approve করার পর এটি এখানে দেখা যাবে।');
+      setMsg('আপনার মতামত পাঠানোর জন্য ধন্যবাদ!');
     }catch(e){setErr(e?.message||'Review submit করা যায়নি।')}
     finally{setBusy(false)}
   };
