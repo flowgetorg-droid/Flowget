@@ -70,7 +70,7 @@ function Reviews({product}){
       <div className="review-top"><div><strong>{r.customer_name||'Customer'}</strong><Stars value={r.rating}/></div><time>{new Date(r.created_at).toLocaleDateString()}</time></div>
       <p>{r.review_text}</p>
       {r.photo_url&&<a href={r.photo_url} target="_blank" rel="noreferrer"><img className="review-photo" src={r.photo_url} alt={`Review by ${r.customer_name||'customer'}`}/></a>}
-    </article>)}</div>:<div className="empty">এখনও কোনো approved review নেই। প্রথম reviewটি আপনিই দিতে পারেন।</div>}
+    </article>)}</div>:null}
   </section>
 }
 
@@ -78,7 +78,7 @@ export default function Product({slug}){
   const navigate=useNavigate();
   const[p,setP]=useState(null),[loading,setLoading]=useState(true),[qty,setQty]=useState(1),[related,setRelated]=useState([]),[activeImage,setActiveImage]=useState(''),[returnPolicy,setReturnPolicy]=useState('');
   useEffect(()=>{getSettings().then(x=>setReturnPolicy(x.return_policy||'')).catch(()=>{})},[]);
-  useEffect(()=>{let alive=true;setLoading(true);setP(null);setRelated([]);
+  useEffect(()=>{let alive=true;setLoading(!p);setRelated([]);
     getProduct(slug).then(async x=>{
       if(!alive)return;if(!x){setP(null);setLoading(false);return}
       setP(x);setLoading(false);setActiveImage(x?.main_image||'');
@@ -93,7 +93,10 @@ export default function Product({slug}){
   const price=p.discount_price||p.price;
   const gallery=[...(p.main_image?[{url:p.main_image,sort_order:-1}]:[]),...((p.product_images||[]).sort((a,b)=>Number(a.sort_order||0)-Number(b.sort_order||0)))].filter((x,i,a)=>x.url&&a.findIndex(y=>y.url===x.url)===i);
   const specObj=p.specifications;
-  const specsText=typeof specObj==='string'?specObj:(specObj&&typeof specObj==='object'?(typeof specObj.details==='string'?specObj.details:Object.entries(specObj).filter(([k])=>k!=='short_description').map(([k,v])=>`${k}: ${String(v??'')}`).join('\n')):'');
+  const normalizeSpecs=(value,depth=0)=>{if(depth>4||value==null)return value;if(typeof value==='string'){const t=value.trim();if((t.startsWith('{')&&t.endsWith('}'))||(t.startsWith('[')&&t.endsWith(']'))){try{return normalizeSpecs(JSON.parse(t),depth+1)}catch{}}return value}if(typeof value==='object'){if(value.details!==undefined)return normalizeSpecs(value.details,depth+1);return Object.fromEntries(Object.entries(value).filter(([k])=>k!=='short_description').map(([k,v])=>[k,normalizeSpecs(v,depth+1)]))}return value};
+  const normalizedSpecs=normalizeSpecs(specObj);
+  const specEntries=normalizedSpecs&&typeof normalizedSpecs==='object'&&!Array.isArray(normalizedSpecs)?Object.entries(normalizedSpecs):[];
+  const specsText=typeof normalizedSpecs==='string'?normalizedSpecs:'';
   return <div className="container">
     <div className="detail"><div className="gallery">{activeImage?<img src={activeImage} alt={p.name}/>:<div className="placeholder">FLOWGET</div>}{gallery.length>1&&<div className="thumbs">{gallery.map((g,i)=><button type="button" className={activeImage===g.url?'active':''} key={g.url+i} onClick={()=>setActiveImage(g.url)}><img src={g.url} alt={`${p.name} ${i+1}`}/></button>)}</div>}{p.video_url&&<video className="productvideo" src={p.video_url} controls playsInline preload="metadata"/>}</div>
       <div><div className="rating"><Star size={15} fill="currentColor"/> {Number(p.rating||0).toFixed(1)} ({p.review_count||0})</div><h1>{p.name}</h1><p className="muted">SKU: {p.sku||'—'}{p.brand?' · '+p.brand:''}</p><div className="price">৳{price}<span className="old">{p.discount_price&&'৳'+p.price}</span></div>{(p.specifications?.short_description||p.short_description)&&<p className="shortdescription">{p.specifications?.short_description||p.short_description}</p>}<p><b>{p.stock>0?`In stock: ${p.stock}`:'Out of stock'}</b></p>
@@ -101,8 +104,8 @@ export default function Product({slug}){
         <div style={{marginTop:15,display:'flex',gap:10,flexWrap:'wrap'}}><button className="btn" disabled={!p.stock} onClick={()=>{addCart(p,qty);alert('Added to cart')}}><ShoppingCart size={18}/> Add to Cart</button><button className="btn" disabled={!p.stock} onClick={()=>{addCart(p,qty);navigate('/checkout')}}>Buy Now</button><button type="button" className="btn secondarybtn" onClick={async()=>{try{await navigator.clipboard.writeText(location.href);alert('Product link copied')}catch{alert(location.href)}}}>Copy product link</button></div>
       </div>
     </div>
-    <section className="productinfo"><div className="productinfo-card" id="description"><h2>Product Description</h2><div className="productdescription">{p.description?<p>{p.description}</p>:<p>Quality product from FlowGet.</p>}</div></div><div className="productinfo-card" id="specifications"><h2>Specifications</h2>{specsText?<div className="productdescription">{specsText}</div>:<p className="muted">No specifications added for this product yet.</p>}</div></section>
-    {returnPolicy&&<section className="productinfo-card product-return-policy"><h2>Return & Refund Policy</h2><div className="productdescription">{returnPolicy}</div><a href="/return-refund-policy">সম্পূর্ণ Return Policy দেখুন</a></section>}
+    <section className="productinfo"><div className="productinfo-card" id="description"><h2>Product Description</h2><div className="productdescription">{p.description?<p>{p.description}</p>:<p>Quality product from FlowGet.</p>}</div></div><div className="productinfo-card" id="specifications"><h2>Specifications</h2>{specEntries.length>0?<div className="spec-display">{specEntries.map(([k,v])=><div className="spec-display-row" key={k}><span>{String(k).replace(/[_-]/g,' ').replace(/\b\w/g,c=>c.toUpperCase())}</span><b>{typeof v==='object'?JSON.stringify(v):String(v??'—')}</b></div>)}</div>:specsText?<div className="productdescription">{specsText}</div>:<p className="muted">No specifications added for this product yet.</p>}</div></section>
+    {returnPolicy&&<details className="productinfo-card product-return-policy"><summary>Return & Refund Policy দেখুন</summary><div className="productdescription">{returnPolicy}</div><a href="/return-refund-policy">সম্পূর্ণ Return Policy দেখুন</a></details>}
     <Reviews product={p}/>
     {related.length>0&&<section className="section"><h2>Related Products</h2><div className="grid">{related.map(x=><ProductCard p={x} key={x.id}/>)}</div></section>}
   </div>

@@ -135,3 +135,25 @@
 .product-return-policy{margin-top:18px;white-space:pre-wrap;line-height:1.7}
 .product-return-policy a{display:inline-block;margin-top:10px;color:var(--primary,#f97316);font-weight:700}
 @media(max-width:640px){.order-address-panel{padding:12px}.landing-link-row{align-items:stretch;flex-direction:column}.landing-link-row .btn{width:fit-content}}
+
+/* Refined product details, compact campaign banner and gentle navigation */
+.hero{margin:12px auto 18px}
+.heroCard{min-height:260px}
+.heroCard h1{font-size:clamp(28px,4vw,42px)}
+.hero-image-only{min-height:0;height:auto;aspect-ratio:16 / 8;padding:0;background-repeat:no-repeat}
+.hero-has-image .heroCard{border-radius:16px}
+@media(max-width:650px){.hero{padding:0 12px;margin:10px auto 14px}.heroCard{min-height:210px;padding:24px 20px}.hero-image-only{min-height:0;height:auto;aspect-ratio:16 / 8;padding:0}.heroCard h1{font-size:29px}}
+.spec-display{display:grid;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}
+.spec-display-row{display:grid;grid-template-columns:minmax(110px,38%) 1fr;gap:14px;padding:11px 14px;border-bottom:1px solid var(--border);line-height:1.5}
+.spec-display-row:last-child{border-bottom:0}
+.spec-display-row span{color:var(--muted);text-transform:capitalize}
+.spec-display-row b{font-weight:650;overflow-wrap:anywhere}
+.product-return-policy{margin-top:18px;white-space:normal;line-height:1.7}
+.product-return-policy summary{cursor:pointer;font-size:19px;font-weight:800;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.product-return-policy summary::-webkit-details-marker{display:none}
+.product-return-policy summary:after{content:'＋';color:var(--primary);font-size:22px}
+.product-return-policy[open] summary:after{content:'−'}
+.product-return-policy .productdescription{white-space:pre-wrap;margin-top:16px}
+.productinfo-card{min-width:0}
+
+@media(max-width:650px){.hero-image-only[style*='--banner-mobile']{background-image:var(--banner-mobile)!important}}
