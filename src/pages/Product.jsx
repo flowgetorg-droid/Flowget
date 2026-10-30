@@ -1,5 +1,5 @@
 import React,{useEffect,useState}from'react';
-import{getProduct,getProductImages,getProductReviews,getProducts,submitReview,uploadReviewPhoto}from'../lib/store';
+import{getProduct,getProductImages,getProductReviews,getProducts,getSettings,submitReview,uploadReviewPhoto}from'../lib/store';
 import{addCart}from'../lib/cart';
 import{ShoppingCart,Minus,Plus,Star,Image as ImageIcon,Send}from'lucide-react';
 import{useNavigate}from'../components/Layout';
@@ -76,7 +76,8 @@ function Reviews({product}){
 
 export default function Product({slug}){
   const navigate=useNavigate();
-  const[p,setP]=useState(null),[loading,setLoading]=useState(true),[qty,setQty]=useState(1),[related,setRelated]=useState([]),[activeImage,setActiveImage]=useState('');
+  const[p,setP]=useState(null),[loading,setLoading]=useState(true),[qty,setQty]=useState(1),[related,setRelated]=useState([]),[activeImage,setActiveImage]=useState(''),[returnPolicy,setReturnPolicy]=useState('');
+  useEffect(()=>{getSettings().then(x=>setReturnPolicy(x.return_policy||'')).catch(()=>{})},[]);
   useEffect(()=>{let alive=true;setLoading(true);setP(null);setRelated([]);
     getProduct(slug).then(async x=>{
       if(!alive)return;if(!x){setP(null);setLoading(false);return}
@@ -92,32 +93,7 @@ export default function Product({slug}){
   const price=p.discount_price||p.price;
   const gallery=[...(p.main_image?[{url:p.main_image,sort_order:-1}]:[]),...((p.product_images||[]).sort((a,b)=>Number(a.sort_order||0)-Number(b.sort_order||0)))].filter((x,i,a)=>x.url&&a.findIndex(y=>y.url===x.url)===i);
   const specObj=p.specifications;
-  // Specifications may come from Supabase as JSONB, plain TEXT, or a JSON
-  // object that was previously saved into a TEXT column. Normalize all three
-  // shapes before rendering so customers never see raw JSON such as
-  // {\"details\":\"...\\n...\"}.
-  const specsText=(()=>{
-    const toText=value=>{
-      if(value==null)return '';
-      if(typeof value==='string'){
-        const text=value.trim();
-        if(!text)return '';
-        try{
-          const parsed=JSON.parse(text);
-          if(parsed!==value)return toText(parsed);
-        }catch{}
-        return value.replace(/\\n/g,'\n');
-      }
-      if(typeof value!=='object')return String(value);
-      if(typeof value.details==='string')return toText(value.details);
-      return Object.entries(value)
-        .filter(([k])=>k!=='short_description')
-        .map(([k,v])=>`${k}: ${toText(v)}`)
-        .filter(line=>line.trim())
-        .join('\n');
-    };
-    return toText(specObj);
-  })();
+  const specsText=typeof specObj==='string'?specObj:(specObj&&typeof specObj==='object'?(typeof specObj.details==='string'?specObj.details:Object.entries(specObj).filter(([k])=>k!=='short_description').map(([k,v])=>`${k}: ${String(v??'')}`).join('\n')):'');
   return <div className="container">
     <div className="detail"><div className="gallery">{activeImage?<img src={activeImage} alt={p.name}/>:<div className="placeholder">FLOWGET</div>}{gallery.length>1&&<div className="thumbs">{gallery.map((g,i)=><button type="button" className={activeImage===g.url?'active':''} key={g.url+i} onClick={()=>setActiveImage(g.url)}><img src={g.url} alt={`${p.name} ${i+1}`}/></button>)}</div>}{p.video_url&&<video className="productvideo" src={p.video_url} controls playsInline preload="metadata"/>}</div>
       <div><div className="rating"><Star size={15} fill="currentColor"/> {Number(p.rating||0).toFixed(1)} ({p.review_count||0})</div><h1>{p.name}</h1><p className="muted">SKU: {p.sku||'—'}{p.brand?' · '+p.brand:''}</p><div className="price">৳{price}<span className="old">{p.discount_price&&'৳'+p.price}</span></div>{(p.specifications?.short_description||p.short_description)&&<p className="shortdescription">{p.specifications?.short_description||p.short_description}</p>}<p><b>{p.stock>0?`In stock: ${p.stock}`:'Out of stock'}</b></p>
@@ -126,6 +102,7 @@ export default function Product({slug}){
       </div>
     </div>
     <section className="productinfo"><div className="productinfo-card" id="description"><h2>Product Description</h2><div className="productdescription">{p.description?<p>{p.description}</p>:<p>Quality product from FlowGet.</p>}</div></div><div className="productinfo-card" id="specifications"><h2>Specifications</h2>{specsText?<div className="productdescription">{specsText}</div>:<p className="muted">No specifications added for this product yet.</p>}</div></section>
+    {returnPolicy&&<section className="productinfo-card product-return-policy"><h2>Return & Refund Policy</h2><div className="productdescription">{returnPolicy}</div><a href="/return-refund-policy">সম্পূর্ণ Return Policy দেখুন</a></section>}
     <Reviews product={p}/>
     {related.length>0&&<section className="section"><h2>Related Products</h2><div className="grid">{related.map(x=><ProductCard p={x} key={x.id}/>)}</div></section>}
   </div>

@@ -125,3 +125,13 @@
   .review-item{flex:0 0 82vw;max-width:82vw;padding:13px}
   .review-photo{height:180px}
 }
+
+/* Order address details and product landing-page helpers */
+.order-address-panel{padding:16px 18px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;min-width:260px;white-space:normal;line-height:1.55}
+.order-address-panel h3{margin:0 0 10px;font-size:16px}
+.order-address-panel p{margin:5px 0;overflow-wrap:anywhere}
+.landing-link-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.landing-link-row code{display:block;max-width:100%;overflow-wrap:anywhere;padding:9px 11px;background:#f3f4f6;border-radius:8px;color:#374151}
+.product-return-policy{margin-top:18px;white-space:pre-wrap;line-height:1.7}
+.product-return-policy a{display:inline-block;margin-top:10px;color:var(--primary,#f97316);font-weight:700}
+@media(max-width:640px){.order-address-panel{padding:12px}.landing-link-row{align-items:stretch;flex-direction:column}.landing-link-row .btn{width:fit-content}}
