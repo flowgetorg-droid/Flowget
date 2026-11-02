@@ -136,12 +136,14 @@
 .product-return-policy a{display:inline-block;margin-top:10px;color:var(--primary,#f97316);font-weight:700}
 @media(max-width:640px){.order-address-panel{padding:12px}.landing-link-row{align-items:stretch;flex-direction:column}.landing-link-row .btn{width:fit-content}}
 
-/* Refined product details, compact campaign banner and gentle navigation */
+/* Refined product details, desktop-friendly campaign banner and gentle navigation */
 .hero{margin:12px auto 18px}
 .heroCard{min-height:260px}
 .heroCard h1{font-size:clamp(28px,4vw,42px)}
 .hero-image-only{min-height:0;height:auto;aspect-ratio:16 / 8;padding:0;background-repeat:no-repeat}
 .hero-has-image .heroCard{border-radius:16px}
+/* Desktop: limit the banner's overall footprint while preserving the full artwork */
+@media(min-width:651px){.hero{max-width:1040px;padding:0 20px}.hero-image-only{max-width:1000px;margin:0 auto;aspect-ratio:2 / 1;background-size:100% 100%!important}}
 @media(max-width:650px){.hero{padding:0 12px;margin:10px auto 14px}.heroCard{min-height:210px;padding:24px 20px}.hero-image-only{min-height:0;height:auto;aspect-ratio:16 / 8;padding:0}.heroCard h1{font-size:29px}}
 .spec-display{display:grid;gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}
 .spec-display-row{display:grid;grid-template-columns:minmax(110px,38%) 1fr;gap:14px;padding:11px 14px;border-bottom:1px solid var(--border);line-height:1.5}
