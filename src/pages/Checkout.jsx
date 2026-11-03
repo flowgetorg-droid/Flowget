@@ -1,10 +1,10 @@
 import React,{useEffect,useMemo,useState}from'react';
 import{getCart,clearCart}from'../lib/cart';
-import{getSettings,placeOrder,validateCoupon}from'../lib/store';
+import{getSettings,placeOrder,validateCoupon}from'../lib/store';import{trackEvent}from'../lib/analytics';
 import{getBangladeshLocations,getLocationFallback}from'../data/bangladesh';
 import{useNavigate}from'../components/Layout';
 
-export default function Checkout(){
+export default function Checkout(){useEffect(()=>{trackEvent('begin_checkout',{item_count:getCart().length})},[]);
  const nav=useNavigate();
  const[c,setC]=useState(getCart());
  const[s,setS]=useState({delivery_dhaka:80,delivery_outside:140});

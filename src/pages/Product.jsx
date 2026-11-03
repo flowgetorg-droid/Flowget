@@ -3,7 +3,7 @@ import{getProduct,getProductImages,getProductReviews,getProducts,getSettings,sub
 import{addCart}from'../lib/cart';
 import{ShoppingCart,Minus,Plus,Star,Image as ImageIcon,Send}from'lucide-react';
 import{useNavigate}from'../components/Layout';
-import ProductCard from'../components/ProductCard';
+import ProductCard from'../components/ProductCard';import{trackEvent}from'../lib/analytics';
 
 function Stars({value=0,size=17}){return <span className="reviewstars" aria-label={`${value} out of 5 stars`}>{[1,2,3,4,5].map(n=><Star key={n} size={size} fill={n<=Number(value)?'currentColor':'none'}/>)}</span>}
 
@@ -81,7 +81,7 @@ export default function Product({slug}){
   useEffect(()=>{let alive=true;setLoading(!p);setRelated([]);
     getProduct(slug).then(async x=>{
       if(!alive)return;if(!x){setP(null);setLoading(false);return}
-      setP(x);setLoading(false);setActiveImage(x?.main_image||'');
+      setP(x);setLoading(false);setActiveImage(x?.main_image||'');trackEvent('view_item',{product_id:x.id,product_name:x.name,price:Number(x.discount_price??x.price??0)});
       if(x){document.title=`${x.name} | FlowGet`;let meta=document.querySelector('meta[name=description]');if(!meta){meta=document.createElement('meta');meta.name='description';document.head.appendChild(meta)}meta.content=(x.meta_description||x.description||`${x.name} — buy online from FlowGet.`).slice(0,155)}
       const imagePromise=getProductImages(x.id).then(images=>{if(alive)setP(prev=>prev?{...prev,product_images:images}:prev)});
       if(x?.category_id)setRelated((await getProducts({category:x.category_id})).filter(y=>y.id!==x.id).slice(0,5));

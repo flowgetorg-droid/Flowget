@@ -166,3 +166,14 @@
 .cat .caticon-image{background:linear-gradient(145deg,#fff,#f3f4f6);padding:5px;box-shadow:0 5px 12px rgba(17,24,39,.12),inset 0 1px 2px #fff}
 .cat .caticon-image img{width:100%;height:100%;object-fit:contain;display:block;filter:drop-shadow(0 3px 3px rgba(17,24,39,.18))}
 .category-icon-preview{display:block;width:100px;height:100px;object-fit:contain;padding:8px;margin-top:8px;border:1px solid var(--border);border-radius:12px;background:linear-gradient(145deg,#fff,#f3f4f6);filter:drop-shadow(0 3px 3px rgba(17,24,39,.12))}
+
+/* Stable promotional banner carousel: no page reload, responsive image crop */
+.heroCard.hero-image-only{position:relative;display:block;aspect-ratio:2/1;min-height:0;height:auto;padding:0;background:#f3f4f6;isolation:isolate}
+.hero-picture{position:absolute;inset:0;display:block;overflow:hidden;border-radius:inherit}
+.hero-picture img{display:block;width:100%;height:100%;object-fit:cover;object-position:center;transition:opacity .2s ease}
+.banner-click-area{position:absolute;inset:0;z-index:1}
+.banner-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:3;border:0;background:rgba(17,24,39,.58);color:#fff;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;cursor:pointer}
+.banner-prev{left:14px}.banner-next{right:14px}.banner-dots{position:absolute;z-index:4;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:7px}
+.banner-dots button{border:0;width:8px;height:8px;padding:0;border-radius:50%;background:rgba(255,255,255,.65);cursor:pointer}.banner-dots button.active{background:#fff;width:20px;border-radius:8px}
+.hero-text-only{min-height:300px}
+@media(max-width:650px){.heroCard.hero-image-only{aspect-ratio:16/8}.banner-arrow{width:32px;height:32px}.banner-prev{left:8px}.banner-next{right:8px}}

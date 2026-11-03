@@ -68,16 +68,17 @@ export default function Admin(){
 }
 function AdminLogin(){const[e,setE]=useState({email:'',password:''}),[err,setErr]=useState(''),[busy,setBusy]=useState(false);return <div className="container"><div className="card adminlogin"><h1>🔐 FlowGet Admin</h1><p className="muted">Phone থেকে product ও order manage করুন।</p><form onSubmit={async x=>{x.preventDefault();setErr('');setBusy(true);const{error}=await supabase.auth.signInWithPassword(e);setBusy(false);if(error)setErr(error.message.includes('Invalid login')?'Invalid email or password.':error.message)}}><Text f="email" type="email" v={e.email} set={v=>setE({...e,email:v})}/><Text f="password" type="password" v={e.password} set={v=>setE({...e,password:v})}/><button className="btn" disabled={busy}>{busy?'Logging in…':'Login'}</button>{err&&<div className="notice" role="alert">{err}</div>}</form></div></div>}
 function Dashboard(){
-  const[s,setS]=useState({orders:0,products:0,pending:0,sales:0,visitor4h:0,visitor24h:0,visitor7d:0,visitor30d:0,recent:[]}),[loading,setLoading]=useState(true);
+  const[s,setS]=useState({orders:0,products:0,pending:0,sales:0,visitor4h:0,visitor24h:0,visitor7d:0,visitor30d:0,productViews:0,addToCart:0,checkouts:0,purchases:0,recent:[]}),[loading,setLoading]=useState(true);
   const load=async()=>{
     const now=Date.now();
     const since30d=new Date(now-30*24*60*60*1000).toISOString();
-    const[o,p,sess]=await Promise.all([
+    const[o,p,sess,events]=await Promise.all([
       supabase.from('orders').select('id,total,status'),
       supabase.from('products').select('id'),
-      supabase.from('visitor_sessions').select('id,started_at,last_seen_at,last_path,device_type,referrer').gte('last_seen_at',since30d).order('last_seen_at',{ascending:false}).limit(5000)
+      supabase.from('visitor_sessions').select('id,started_at,last_seen_at,last_path,device_type,referrer').gte('last_seen_at',since30d).order('last_seen_at',{ascending:false}).limit(5000),
+      supabase.from('analytics_events').select('event_name,created_at').gte('created_at',since30d).limit(10000)
     ]);
-    const rows=o.data||[]; const visitors=sess.data||[];
+    const rows=o.data||[]; const visitors=sess.data||[]; const eventRows=events.data||[]; const eventCount=name=>eventRows.filter(e=>e.event_name===name).length;
     const uniqueCount=(ms)=>{
       const cutoff=now-ms;
       return new Set(visitors.filter(v=>new Date(v.last_seen_at||v.started_at||0).getTime()>=cutoff).map(v=>v.id)).size;
@@ -91,9 +92,10 @@ function Dashboard(){
       visitor24h:uniqueCount(24*60*60*1000),
       visitor7d:uniqueCount(7*24*60*60*1000),
       visitor30d:uniqueCount(30*24*60*60*1000),
+      productViews:eventCount('view_item'),addToCart:eventCount('add_to_cart'),checkouts:eventCount('begin_checkout'),purchases:eventCount('purchase'),
       recent:visitors.slice(0,8)
     });
-    if(o.error||p.error||sess.error)console.warn('Admin dashboard load:',o.error||p.error||sess.error);
+    if(o.error||p.error||sess.error||events.error)console.warn('Admin dashboard load:',o.error||p.error||sess.error||events.error);
     setLoading(false);
   };
   useEffect(()=>{load();const id=setInterval(load,60000);return()=>clearInterval(id)},[]);
@@ -108,6 +110,10 @@ function Dashboard(){
       <div className="stat visitorstat">Visitors<strong>{s.visitor24h}</strong><small>last 24 hours</small></div>
       <div className="stat visitorstat">Visitors<strong>{s.visitor7d}</strong><small>last 7 days</small></div>
       <div className="stat visitorstat">Visitors<strong>{s.visitor30d}</strong><small>last 30 days</small></div>
+      <div className="stat visitorstat">Product views<strong>{s.productViews}</strong><small>last 30 days · events</small></div>
+      <div className="stat visitorstat">Add to cart<strong>{s.addToCart}</strong><small>last 30 days · events</small></div>
+      <div className="stat visitorstat">Checkout started<strong>{s.checkouts}</strong><small>last 30 days · events</small></div>
+      <div className="stat visitorstat">Purchase events<strong>{s.purchases}</strong><small>last 30 days · events</small></div>
     </div>
     <div className="card visitorpanel">
       <div className="panelhead"><div><h2>Visitor Activity</h2><p className="muted">Unique visitor sessions active in each selected period. Updates automatically every minute.</p></div><button className="btn smallbtn" onClick={load}>Refresh</button></div>
